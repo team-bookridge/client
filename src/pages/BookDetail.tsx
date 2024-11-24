@@ -1,5 +1,5 @@
 function BookDetail() {
-  return <div>BookDetail</div>;
+  return <div className="h-[1000px]">BookDetail</div>;
 }
 
 export default BookDetail;

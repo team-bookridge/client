@@ -2,45 +2,34 @@ import '@/App.css';
 import Footer from '@components/app/Footer';
 import Header from '@components/app/Header';
 import BookDetail from '@pages/BookDetail';
-import BookList from '@pages/BookList';
-import FavoriteList from '@pages/FavoriteList';
 import Home from '@pages/Home';
+import BestSeller from '@pages/list/BestSeller';
+import EditorChoice from '@pages/list/EditorChoice';
+import NewBook from '@pages/list/NewBook';
 import MyPage from '@pages/MyPage';
 import Search from '@pages/Search';
-import { Link, Route, Routes } from 'react-router-dom';
+import WishList from '@pages/WishList';
+
+import { Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="flex flex-col text-5xl items-center gap-5">
+    <>
       <Header />
-      <div className="flex gap-5 text-3xl">
-        <Link to="/">홈</Link>
-        <Link to="/domestic">국내도서</Link>
-        <Link to="/overseas">해외도서</Link>
-        <Link to="/new">신간도서</Link>
-        <Link to="/mypage">마이페이지</Link>
-        <Link to="/mypage/favorite">마이페이지/찜목록</Link>
-        <Link to="/detail/2">상세정보</Link>
-        <Link to="search">검색결과</Link>
+      <div className="flex flex-col w-[64rem] gap-6 px-[1.25rem] pt-[3.75rem]">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/BestSeller" element={<BestSeller />} />
+          <Route path="/NewBook" element={<NewBook />} />
+          <Route path="/EditorChoice" element={<EditorChoice />} />
+          <Route path="/Search" element={<Search />} />
+          <Route path="/MyPage" element={<MyPage />} />
+          <Route path="/MyPage/WishList" element={<WishList />} />
+          <Route path="/BookDetail/:isbn" element={<BookDetail />} />
+        </Routes>
+        <Footer />
       </div>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/domestic"
-          element={<BookList headerCategory="domestic" />}
-        />
-        <Route
-          path="/overseas"
-          element={<BookList headerCategory="overseas" />}
-        />
-        <Route path="/new" element={<BookList headerCategory="new" />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/mypage" element={<MyPage />} />
-        <Route path="/mypage/favorite" element={<FavoriteList />} />
-        <Route path="/detail/:isbn" element={<BookDetail />} />
-      </Routes>
-      <Footer />
-    </div>
+    </>
   );
 }
 

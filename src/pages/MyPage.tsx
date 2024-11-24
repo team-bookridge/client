@@ -1,5 +1,5 @@
 function MyPage() {
-  return <div>MyPage</div>;
+  return <div className="h-[1000px]">MyPage</div>;
 }
 
 export default MyPage;

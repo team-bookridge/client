@@ -1,5 +1,5 @@
 function Search() {
-  return <div>Search</div>;
+  return <div className="h-[1000px]">Search</div>;
 }
 
 export default Search;
