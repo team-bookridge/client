@@ -16,7 +16,7 @@ function App() {
   return (
     <>
       <Header />
-      <div className="flex flex-col w-[64rem] gap-6 px-[1.25rem] pt-[3.75rem]">
+      <div className="flex flex-col w-[64rem] gap-6 px-[1.25rem] pt-[5rem]">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/BestSeller" element={<BestSeller />} />

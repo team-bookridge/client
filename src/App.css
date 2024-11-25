@@ -85,7 +85,6 @@ textarea:not([rows]) {
 /* 버튼 스타일 초기화 */
 button {
   background: inherit;
-  border: none;
   box-shadow: none;
   border-radius: 0;
   padding: 0;
