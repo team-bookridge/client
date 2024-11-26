@@ -19,6 +19,7 @@ import { Route, Routes } from 'react-router-dom';
 
 function App() {
   const [modal, setModal] = useState<TModal>('none');
+
   return (
     <>
       {modal !== 'none' && (
