@@ -1,13 +1,10 @@
+import { TCategoryItem } from '@/types';
 import { useState } from 'react';
 
-type categoryItem = {
-  id: number;
-  name: string;
-};
 function EditorChoice() {
-  const [categoryChoice, setcategoryChoice] = useState<number>(170);
+  const [categoryChoice, setCategoryChoice] = useState<number>(170);
 
-  const category: categoryItem[] = [
+  const category: TCategoryItem[] = [
     {
       id: 170,
       name: '경제/경영',
@@ -73,13 +70,13 @@ function EditorChoice() {
     <>
       <h2 className="text-[1.5rem] border-b-2">편집자추천</h2>
       <div className="flex flex-wrap gap-[0.5rem] p-[0.5rem] border-2 rounded-[0.5rem]">
-        {category.map((el: categoryItem) => (
+        {category.map((el: TCategoryItem) => (
           <button
             type="button"
             key={el.id}
             className={`p-[0.25rem] border-2 rounded-[0.5rem] ${el.id === categoryChoice && 'bg-gray-300'}`}
             onClick={() => {
-              setcategoryChoice(el.id);
+              setCategoryChoice(el.id);
             }}>
             {el.name}
           </button>
