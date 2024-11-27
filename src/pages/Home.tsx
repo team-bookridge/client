@@ -1,15 +1,24 @@
 import React from 'react';
 import SimpleSlider from '../components/home/SimpleSlider';
 import Responsive from '../components/home/Responsive';
+import useGetListData from '@/hooks/list/useGetListData';
 
 const Home: React.FC = () => {
+  const { data, isLoading } = useGetListData(
+    'SlickBestSeller',
+    import.meta.env.VITE_ALADIN_API_URL,
+    import.meta.env.VITE_ALADIN_API_KEY,
+    'Bestseller'
+  );
+
+  console.log(data);
+
   return (
     <div className="container">
       {/* SimpleSlider 섹션 */}
       <div className="ad-container">
         <SimpleSlider />
       </div>
-
       {/* 베스트 셀러 섹션 */}
       <div className="book-list-container">
         <h2>베스트 셀러</h2>
