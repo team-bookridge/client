@@ -1,3 +1,6 @@
+@import '~slick-carousel/slick/slick.css';
+@import '~slick-carousel/slick/slick-theme.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -110,4 +113,111 @@ li {
   display: flex;
   justify-content: center;
   min-height: 100vh;
+}
+
+.container {
+  /* 컨테이너 스타일 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.ad-container {
+  /* 광고 컨테이너 스타일 */
+  width: 100%;
+  background-color: lightgray;
+  margin-bottom: 20px;
+}
+
+.ad {
+  /* 광고 스타일 */
+  text-align: center;
+  font-size: 24px;
+  padding: 10px 0;
+}
+
+.book-list-container {
+  /* 책 목록 컨테이너 스타일 */
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.book-list {
+  /* 책 목록 스타일 */
+  display: flex;
+  overflow-x: auto;
+}
+
+.book-card {
+  /* 책 카드 스타일 */
+  width: 80px;
+  height: 120px;
+  background-color: black;
+  margin-right: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.book-card img {
+  /* 책 카드 이미지 스타일 */
+  width: 100%;
+  height: 80%;
+  object-fit: cover;
+}
+
+.category-container {
+  /* 카테고리 컨테이너 스타일 */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.categories {
+  /* 카테고리 목록 스타일 */
+  display: flex;
+  overflow-x: auto;
+}
+
+.category-card {
+  /* 카테고리 카드 스타일 */
+  padding: 5px 10px;
+  border: 1px solid black;
+  margin-right: 10px;
+}
+
+.more-button {
+  /* 더 보기 버튼 스타일 */
+  padding: 5px 10px;
+  border: 1px solid black;
+}
+
+.slick-slider,
+.slick-list,
+.slick-track {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* slick 스타일 */
+.slider-container {
+  width: 100px;
+  margin: 0 auto;
+  /* 슬라이드 스타일 */
+}
+
+.slick-dots {
+  display: flex !important;
+  justify-content: center;
+}
+
+.slick-slide {
+  display: flex;
+  align-items: center;
 }

@@ -10,14 +10,20 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/slick-carousel": "^1.6.40",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.28.0"
+    "react-router-dom": "^6.28.0",
+    "react-slick": "^0.30.2",
+    "slick-carousel": "^1.8.1",
+    "swiper": "^11.1.15"
   },
   "devDependencies": {
     "@types/node": "^22.9.1",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
+    "@types/react-slick": "^0.23.13",
+    "@types/swiper": "^5.4.3",
     "@typescript-eslint/eslint-plugin": "^8.15.0",
     "@typescript-eslint/parser": "^8.15.0",
     "@vitejs/plugin-react": "^4.3.3",
