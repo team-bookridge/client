@@ -25,6 +25,9 @@ export default {
         slideUpAndFadeIn: 'slideUp 0.4s ease-in-out, fadeIn 0.4s ease-in-out',
         fadeIn: 'fadeIn 0.3s ease-in-out',
       },
+      screens: {
+        vs: '450px',
+      },
     },
   },
   plugins: [],
