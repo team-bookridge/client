@@ -1,7 +1,7 @@
 import fetchListData from '@/hooks/list/fetchListData';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-const useInfiniteGetData = (
+const useInfiniteGetListData = (
   queryKey: string,
   baseUrl: string,
   apiKey: string,
@@ -31,4 +31,4 @@ const useInfiniteGetData = (
     initialPageParam: 1,
   });
 
-export default useInfiniteGetData;
+export default useInfiniteGetListData;

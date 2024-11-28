@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const fetchSearchData = async (
+const fetchSearchListData = async (
   baseUrl: string,
   apiKey: string,
   query: string,
@@ -12,4 +12,4 @@ const fetchSearchData = async (
   return response.data;
 };
 
-export default fetchSearchData;
+export default fetchSearchListData;
