@@ -2,19 +2,28 @@ import React from 'react';
 import SimpleSlider from '../components/home/SimpleSlider';
 import Responsive from '../components/home/Responsive';
 import useGetListData from '@/hooks/list/useGetListData';
+import '../App.css';
+import '../slick.css';
 
 const Home: React.FC = () => {
-  const { data, isLoading } = useGetListData(
-    'SlickBestSeller',
+  const { data: bestSellerData, isLoading: isBestSellerLoading } =
+    useGetListData(
+      'SlickBestSeller',
+      import.meta.env.VITE_ALADIN_API_URL,
+      import.meta.env.VITE_ALADIN_API_KEY,
+      'Bestseller'
+    );
+
+  const { data: newBookData, isLoading: isNewBookLoading } = useGetListData(
+    'SlickNewBook',
     import.meta.env.VITE_ALADIN_API_URL,
     import.meta.env.VITE_ALADIN_API_KEY,
-    'Bestseller'
+    'ItemNewSpecial'
   );
 
-  console.log(data);
-
   return (
-    <div className="container">
+    <div className="custom-container">
+      {/* 커스텀 컨테이너 유지 */}
       {/* SimpleSlider 섹션 */}
       <div className="ad-container">
         <SimpleSlider />
@@ -22,15 +31,21 @@ const Home: React.FC = () => {
       {/* 베스트 셀러 섹션 */}
       <div className="book-list-container">
         <h2>베스트 셀러</h2>
-        <Responsive />
+        {isBestSellerLoading ? (
+          <p>로딩 중...</p>
+        ) : (
+          <Responsive books={bestSellerData?.item} />
+        )}
       </div>
-
       {/* 주목할 만한 신간 섹션 */}
       <div className="book-list-container">
         <h2>주목할 만한 신간</h2>
-        <Responsive />
+        {isNewBookLoading ? (
+          <p>로딩 중...</p>
+        ) : (
+          <Responsive books={newBookData?.item} />
+        )}
       </div>
-
       {/* 편집자 추천 섹션 */}
       <div className="category-container">
         <h2>편집자 추천</h2>
@@ -47,11 +62,8 @@ const Home: React.FC = () => {
           더 보기
         </button>
       </div>
-
       {/* 추가 책 목록 섹션 */}
-      <div className="book-list-container">
-        <Responsive />
-      </div>
+      <div className="book-list-container"></div>
     </div>
   );
 };
