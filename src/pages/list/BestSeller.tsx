@@ -6,12 +6,7 @@ import { useInView } from 'react-intersection-observer';
 
 function BestSeller() {
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteGetData(
-      'Bestseller-List',
-      import.meta.env.VITE_ALADIN_API_URL,
-      import.meta.env.VITE_ALADIN_API_KEY,
-      'Bestseller'
-    );
+    useInfiniteGetData('Bestseller-List', 'Bestseller');
 
   const { ref, inView } = useInView();
 
