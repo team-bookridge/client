@@ -11,8 +11,6 @@ function EditorChoice() {
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteGetListData(
       'EditorChoice-List',
-      import.meta.env.VITE_ALADIN_API_URL,
-      import.meta.env.VITE_ALADIN_API_KEY,
       'ItemEditorChoice',
       selectedCategory
     );

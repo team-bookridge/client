@@ -6,12 +6,7 @@ import { useInView } from 'react-intersection-observer';
 
 function NewBook() {
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteGetListData(
-      'ItemNewSpecial-List',
-      import.meta.env.VITE_ALADIN_API_URL,
-      import.meta.env.VITE_ALADIN_API_KEY,
-      'ItemNewSpecial'
-    );
+    useInfiniteGetListData('ItemNewSpecial-List', 'ItemNewSpecial');
 
   const { ref, inView } = useInView();
 

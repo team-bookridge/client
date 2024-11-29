@@ -12,7 +12,7 @@ function BookItem({ bookInfo }: Props) {
     <div className="flex flex-col gap-[1.5rem] px-[0.5rem] py-[1rem] w-[100%] border-b-2 border-[#C0CFB2]">
       <div className="flex h-[16.5rem] gap-[1rem]">
         <div className="min-w-[9rem] max-w-[9rem]">
-          <Link to={`/BookDetail/${bookInfo.isbn13}`}>
+          <Link to={`/BookDetail/${bookInfo.itemId}`}>
             <img
               className="w-[100%]"
               src={bookInfo.cover}
@@ -24,7 +24,7 @@ function BookItem({ bookInfo }: Props) {
           <div className="min-h-[3.25rem]">
             <Link
               className="hover:underline text-start line-clamp-2 pb-[0.25rem] font-[900]"
-              to={`/BookDetail/${bookInfo.isbn13}`}>
+              to={`/BookDetail/${bookInfo.itemId}`}>
               {bookInfo.title}
             </Link>
           </div>

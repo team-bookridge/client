@@ -2,7 +2,7 @@ import githubIcon from '@/assets/github-icon.png';
 
 function Footer() {
   return (
-    <div className="flex flex-col gap-[2rem] py-[5rem] bg-gray-100">
+    <div className="flex flex-col gap-[2rem] py-[5rem]">
       <div className="flex flex-col items-center">
         <div className="flex gap-[1rem]">
           <h2 className="text-[1.25rem]">TeamProject - Bookridge</h2>
@@ -25,7 +25,7 @@ function Footer() {
         <div className="flex flex-col items-center">
           <h3 className="text-[1.25rem]">개발자 정보</h3>
           <div className="">
-            <div className="flex vs:gap-[0.5rem] gap-0 vs:flex-row flex-col">
+            <div className="flex w450px:gap-[0.5rem] gap-0 w450px:flex-row flex-col">
               <span>오건국 - 팀장</span>
               <div className="flex gap-[0.5rem]">
                 <span>📧</span>
@@ -42,7 +42,7 @@ function Footer() {
                 </a>
               </div>
             </div>
-            <div className="flex vs:gap-[0.5rem] gap-0 vs:flex-row flex-col">
+            <div className="flex w450px:gap-[0.5rem] gap-0 w450px:flex-row flex-col">
               <span>정찬희 - 팀원</span>
               <div className="flex gap-[0.5rem]">
                 <span>📧</span>
@@ -59,7 +59,7 @@ function Footer() {
                 </a>
               </div>
             </div>
-            <div className="flex vs:gap-[0.5rem] gap-0 vs:flex-row flex-col">
+            <div className="flex w450px:gap-[0.5rem] gap-0 w450px:flex-row flex-col">
               <span>추서령 - 팀원</span>
               <div className="flex gap-[0.5rem]">
                 <span>📧</span>
@@ -76,7 +76,7 @@ function Footer() {
                 </a>
               </div>
             </div>
-            <div className="flex vs:gap-[0.5rem] gap-0 vs:flex-row flex-col">
+            <div className="flex w450px:gap-[0.5rem] gap-0 w450px:flex-row flex-col">
               <span>안수연 - 팀원</span>
               <div className="flex gap-[0.5rem]">
                 <span>📧</span>
