@@ -9,7 +9,7 @@ const useInfiniteGetListData = (
   categoryId: number = 0
 ) =>
   useInfiniteQuery({
-    queryKey: [queryKey],
+    queryKey: [queryKey, String(categoryId)],
     queryFn: ({ pageParam }) =>
       fetchListData(baseUrl, apiKey, queryType, categoryId, pageParam),
     getNextPageParam: (last) => {
