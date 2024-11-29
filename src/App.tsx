@@ -44,7 +44,7 @@ function App() {
           <Route path="/Search" element={<Search />} />
           <Route path="/MyPage" element={<MyPage />} />
           <Route path="/MyPage/WishList" element={<WishList />} />
-          <Route path="/BookDetail/:isbn" element={<BookDetail />} />
+          <Route path="/BookDetail/:itemId" element={<BookDetail />} />
         </Routes>
         <Footer />
       </div>
