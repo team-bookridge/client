@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import logo from '@/assets/logo.png';
 import { Link, useNavigate } from 'react-router-dom';
 import type { Dispatch, SetStateAction } from 'react';
 import { TModal } from '@/types';
@@ -14,10 +15,10 @@ function Header({ setModal }: Props) {
   return (
     <div
       className="fixed top-0 flex flex-col max-w-[64rem] w-full px-[1.25rem] 
-      items-center gap-[0.75rem] py-[0.5rem] border-b-2 z-10 bg-white">
+      items-center gap-[0.75rem] py-[0.5rem] border-b-2 border-[#31572c] z-10 bg-white">
       <div className="flex justify-between w-full gap-[0.5rem]">
         <button
-          className="md:hidden"
+          className="md:hidden text-[1.25rem] text-[#31572c] font-[600]"
           type="button"
           onClick={() => {
             setModal('HeaderMenu');
@@ -25,21 +26,30 @@ function Header({ setModal }: Props) {
           ☰
         </button>
         <div className="flex gap-[1rem]">
-          <Link to="/">LOGO</Link>
+          <Link to="/">
+            <img className="h-[3rem]" src={logo} alt="로고" />
+          </Link>
           <div className="hidden gap-[0.5rem] md:flex">
-            <Link className="hover:text-[#809671]" to="/BestSeller">
-              베스트셀러
+            <Link
+              className="flex items-center hover:text-[#809671] text-[#31572c]"
+              to="/BestSeller">
+              <div className="text-[1.125rem] font-[600]">베스트셀러</div>
             </Link>
-            <Link className="hover:text-[#809671]" to="/NewBook">
-              신간도서
+            <Link
+              className="flex items-center hover:text-[#809671] text-[#31572c]"
+              to="/NewBook">
+              <div className="text-[1.125rem] font-[600]">신간도서</div>
             </Link>
-            <Link className="hover:text-[#809671]" to="/EditorChoice">
-              편집자추천
+            <Link
+              className="flex items-center hover:text-[#809671] text-[#31572c]"
+              to="/EditorChoice">
+              <div className="text-[1.125rem] font-[600]">편집자추천</div>
             </Link>
           </div>
         </div>
         <div className="flex gap-[1rem]">
           <button
+            className="text-[1.25rem] text-[#31572c] font-[600]"
             type="button"
             onClick={() => {
               setActiveSearchBar(!activeSearchBar);
