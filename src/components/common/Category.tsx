@@ -1,4 +1,5 @@
 import { TCategory } from '@/types';
+import { useQueryClient } from '@tanstack/react-query';
 import type { Dispatch, SetStateAction } from 'react';
 
 interface Props {
@@ -7,6 +8,7 @@ interface Props {
 }
 
 function Category({ selectedCategory, setSelectedCategory }: Props) {
+  const queryClient = useQueryClient();
   const categories: TCategory[] = [
     {
       id: 170,
@@ -53,16 +55,12 @@ function Category({ selectedCategory, setSelectedCategory }: Props) {
       name: '자기계발',
     },
     {
-      id: 112011,
-      name: '장르소설',
-    },
-    {
       id: 351,
       name: '컴퓨터/모바일',
     },
     {
       id: 55890,
-      name: '건강/취미/레저',
+      name: '건강/취미',
     },
     {
       id: 2913,
@@ -71,14 +69,15 @@ function Category({ selectedCategory, setSelectedCategory }: Props) {
   ];
 
   return (
-    <div className="flex flex-wrap gap-[0.5rem] p-[0.5rem] border-2 rounded-[0.5rem]">
-      {categories.map((el: TCategory) => (
+    <div className="flex flex-wrap justify-center gap-[0.5rem] p-[0.5rem] my-[1rem] border-2 border-[#E4E6D9] rounded-[0.5rem]">
+      {categories.map((el) => (
         <button
           type="button"
           key={el.id}
-          className={`p-[0.25rem] border-2 rounded-[0.5rem] ${el.id === selectedCategory && 'bg-gray-300'}`}
+          className={`px-[0.5rem] py-[0.25rem] text-white font-[900] rounded-[0.5rem] ${el.id === selectedCategory ? 'bg-[#45624E]' : 'bg-[#C0CFB2]'}`}
           onClick={() => {
             setSelectedCategory(el.id);
+            queryClient.invalidateQueries({ queryKey: ['EditorChoice-List'] });
           }}>
           {el.name}
         </button>
