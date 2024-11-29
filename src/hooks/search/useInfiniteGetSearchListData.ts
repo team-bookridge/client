@@ -1,16 +1,10 @@
 import fetchSearchListData from '@/hooks/search/fetchSearchListData';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-const useInfiniteGetSearchListData = (
-  queryKey: string,
-  baseUrl: string,
-  apiKey: string,
-  queryType: string
-) =>
+const useInfiniteGetSearchListData = (queryKey: string, queryType: string) =>
   useInfiniteQuery({
     queryKey: [queryKey],
-    queryFn: ({ pageParam }) =>
-      fetchSearchListData(baseUrl, apiKey, queryType, pageParam),
+    queryFn: ({ pageParam }) => fetchSearchListData(queryType, pageParam),
     getNextPageParam: (last) => {
       let totalPage;
 
