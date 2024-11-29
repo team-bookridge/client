@@ -1,34 +1,42 @@
+import useInfiniteGetListData from '@/hooks/list/useInfiniteGetListData';
+import { TResponseBookItemInfo } from '@/types';
+import BookItem from '@components/common/BookItem';
+import { useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
+
 function NewBook() {
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteGetListData(
+      'ItemNewSpecial-List',
+      import.meta.env.VITE_ALADIN_API_URL,
+      import.meta.env.VITE_ALADIN_API_KEY,
+      'ItemNewSpecial'
+    );
+
+  const { ref, inView } = useInView();
+
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inView]);
+
   return (
-    <>
-      <h2 className="text-[1.5rem] border-b-2">신간도서</h2>
+    <div className="flex flex-col">
+      <h2 className="text-[1.5rem] py-[1rem] text-[#4F772D;] border-b-4 border-[#C0CFB2] font-[900]">
+        신간도서
+      </h2>
       <div className="flex flex-wrap">
-        <div className="md:w-[50%] bg-gray-400 w-[100%] h-[300px] border-b-2">
-          item1
-        </div>
-        <div className="md:w-[50%] bg-gray-400 w-[100%] h-[300px] border-b-2">
-          item2
-        </div>
-        <div className="md:w-[50%] bg-gray-400 w-[100%] h-[300px] border-b-2">
-          item3
-        </div>
-        <div className="md:w-[50%] bg-gray-400 w-[100%] h-[300px] border-b-2">
-          item4
-        </div>
-        <div className="md:w-[50%] bg-gray-400 w-[100%] h-[300px] border-b-2">
-          item5
-        </div>
-        <div className="md:w-[50%] bg-gray-400 w-[100%] h-[300px] border-b-2">
-          item6
-        </div>
-        <div className="md:w-[50%] bg-gray-400 w-[100%] h-[300px] border-b-2">
-          item7
-        </div>
-        <div className="md:w-[50%] bg-gray-400 w-[100%] h-[300px] border-b-2">
-          item8
-        </div>
+        {!isLoading &&
+          data?.pages.map((page) =>
+            page.item.map((el: TResponseBookItemInfo) => (
+              <BookItem key={el.itemId} bookInfo={el} />
+            ))
+          )}
       </div>
-    </>
+      <h1 ref={ref}>Load more</h1>
+    </div>
   );
 }
 
