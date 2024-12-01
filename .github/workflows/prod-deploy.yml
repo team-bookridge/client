@@ -16,7 +16,7 @@ jobs:
         run: npm i
 
       - name: env 파일 생성
-        run: echo -e "VITE_ALADIN_API_URL=${{ secrets.VITE_ALADIN_API_URL }}\nVITE_ALADIN_API_KEY=${{secrets.VITE_ALADIN_API_KEY}}" >> .env
+        run: echo -e "VITE_PROXY_OPEN_API_URL=${{ secrets.VITE_PROXY_OPEN_API_URL }}\nVITE_ALADIN_API_KEY=${{secrets.VITE_ALADIN_API_KEY}}" >> .env
 
       - name: 빌드
         run: npm run build

@@ -6,7 +6,7 @@ const fetchListData = async (
   page: number = 1
 ) => {
   const response = await axios.get(
-    `${import.meta.env.VITE_ALADIN_API_URL}/ItemList.aspx?ttbKey=${import.meta.env.VITE_ALADIN_API_KEY}&QueryType=${queryType}&SearchTarget=Book&CategoryId=${categoryId}&Start=${page}&Cover=Big&output=JS&Version=20131101`
+    `${import.meta.env.VITE_PROXY_OPEN_API_URL}/aladin/list?ttbKey=${import.meta.env.VITE_ALADIN_API_KEY}&QueryType=${queryType}&SearchTarget=Book&CategoryId=${categoryId}&Start=${page}&Cover=Big&output=JS&Version=20131101`
   );
   return response.data;
 };
