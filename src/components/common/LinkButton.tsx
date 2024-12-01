@@ -1,34 +1,39 @@
-import { TOtherLink } from '@/types';
+import { TResponseBookItemInfo, TSiteName } from '@/types';
 import axios from 'axios';
 
 interface Props {
-  isbn: string;
-  otherSite: TOtherLink;
+  bookInfo: TResponseBookItemInfo;
+  siteName: TSiteName;
 }
 
-function LinkButton({ isbn, otherSite }: Props) {
-  let url: string;
-
-  if (otherSite === '교보문고') {
-    url = `https://www.kyobobook.co.kr/product/detailViewKor.laf?barcode=${isbn}`;
-  } else {
-    axios
-      .get(
-        `https://www.yes24.com/Product/searchapi/bulletsearch/goods?query=${isbn}&domain=ALL&page=0`
-      )
-      .then((res) => res.data)
-      .then((res) => {
-        url = `https://www.yes24.com/Product/Goods/${res.lstSearchKeywordResult[0].GOODDS_INDEXES.GOODS_NO}`;
-      });
-  }
+function LinkButton({ bookInfo, siteName }: Props) {
   return (
     <button
       className="hover:bg-[#45624E] bg-[#C0CFB2] text-[1.125rem] text-[white] font-[900] rounded-[0.25rem] px-[0.75rem] py-[0.25rem]"
       type="button"
       onClick={() => {
-        window.open(url, '_blank');
+        if (siteName === '교보문고') {
+          window.open(
+            `https://www.kyobobook.co.kr/product/detailViewKor.laf?barcode=${bookInfo.isbn13}`,
+            '_blank'
+          );
+        } else if (siteName === '예스24') {
+          axios
+            .get(
+              `${import.meta.env.VITE_PROXY_OPEN_API_URL}/yes24/goods?query=${bookInfo.isbn13}&domain=ALL&page=0`
+            )
+            .then((res) => res.data)
+            .then((res) => {
+              window.open(
+                `https://www.yes24.com/Product/Goods/${res.lstSearchKeywordResult[0].GOODDS_INDEXES.GOODS_NO}`,
+                '_blank'
+              );
+            });
+        } else {
+          window.open(bookInfo.link, '_blank');
+        }
       }}>
-      {otherSite}
+      {siteName}
     </button>
   );
 }
