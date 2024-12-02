@@ -31,4 +31,4 @@ export type TResponseBookItemInfo = {
   subInfo: object;
 };
 
-export type TOtherLink = '교보문고' | '예스24';
+export type TSiteName = '교보문고' | '예스24' | '알라딘';

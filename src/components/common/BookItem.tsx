@@ -40,16 +40,9 @@ function BookItem({ bookInfo }: Props) {
         </div>
       </div>
       <div className="w519px:justify-start w519px:ml-[10rem] flex justify-center gap-[1.5rem]">
-        <button
-          className="hover:bg-[#45624E] bg-[#C0CFB2] text-[1.125rem] text-[white] font-[900] rounded-[0.25rem] px-[0.75rem] py-[0.25rem]"
-          type="button"
-          onClick={() => {
-            window.open(bookInfo.link, '_blank');
-          }}>
-          알라딘
-        </button>
-        <LinkButton isbn={bookInfo.isbn13} otherSite="교보문고" />
-        <LinkButton isbn={bookInfo.isbn13} otherSite="예스24" />
+        <LinkButton bookInfo={bookInfo} siteName="알라딘" />
+        <LinkButton bookInfo={bookInfo} siteName="교보문고" />
+        <LinkButton bookInfo={bookInfo} siteName="예스24" />
       </div>
     </div>
   );
