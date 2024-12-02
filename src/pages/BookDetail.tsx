@@ -1,39 +1,71 @@
-import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import useGetDetailData from '@/hooks/detail/useGetDetailData';
 
 function BookDetail() {
-  const [isLiked, setIsLiked] = useState(false);
+  const { itemId } = useParams<{ itemId: string }>();
+  const { data, isLoading, error } = useGetDetailData('bookDetail', itemId);
 
-  const toggleLike = () => {
-    setIsLiked(!isLiked);
-  };
+  console.log('Route Param ItemId:', itemId);
+  console.log('Fetched Data:', data);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error || !data) {
+    return <div>Error occurred while fetching book details.</div>;
+  }
+
+  if (data.errorCode) {
+    return <div>{data.errorMessage || 'Invalid item ID'}</div>;
+  }
+
+  const book = Array.isArray(data.item) ? data.item[0] : data.item;
+
+  if (!book) {
+    return <div>No book details available.</div>;
+  }
+
+  const {
+    title = 'Unknown Title',
+    author = 'Unknown Author',
+    publisher = 'Unknown Publisher',
+    pubDate = 'Unknown Date',
+    priceStandard = 'Unknown Price',
+    cover = '',
+    description = 'No description available',
+  } = book;
 
   return (
     <div className="h-full p-4 sm:p-6">
       <div className="flex flex-col sm:flex-row border-b pb-4 bg-white rounded-lg shadow-md p-4">
         <div className="sm:w-1/4 w-full mb-4 sm:mb-0">
           <div className="w-full h-60 bg-gray-300 flex items-center justify-center">
-            Book Cover
+            {cover ? (
+              <img
+                src={cover}
+                alt={title}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <span>No Cover Available</span>
+            )}
           </div>
         </div>
         <div className="sm:ml-6 flex-1">
           <div className="flex items-center justify-between mb-4">
-            <h1 className="text-lg sm:text-xl font-bold">Title</h1>
-            <button
-              type="button"
-              onClick={toggleLike}
-              className={`text-xl sm:text-2xl ${
-                isLiked ? 'text-pink-500' : 'text-gray-500'
-              }`}
-              aria-label="좋아요">
-              ♥
-            </button>
+            <h1 className="text-lg sm:text-xl font-bold">{title}</h1>
           </div>
-          <p className="text-sm sm:text-base text-gray-700">Author :</p>
-          <p className="text-sm sm:text-base text-gray-700">Publisher :</p>
+          <p className="text-sm sm:text-base text-gray-700">Author: {author}</p>
           <p className="text-sm sm:text-base text-gray-700">
-            Publication Date :
+            Publisher: {publisher}
           </p>
-          <p className="text-sm sm:text-base text-gray-700">Price :</p>
+          <p className="text-sm sm:text-base text-gray-700">
+            Publication Date: {pubDate}
+          </p>
+          <p className="text-sm sm:text-base text-gray-700">
+            Price: {priceStandard}
+          </p>
         </div>
       </div>
 
@@ -59,14 +91,7 @@ function BookDetail() {
         <h2 className="text-base sm:text-lg font-semibold mb-4">
           Book Summary
         </h2>
-        <p className="text-sm sm:text-base text-gray-700">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis congue
-          felis a faucibus feugiat. Phasellus dictum rutrum ligula eget
-          placerat. Aenean et pharetra nibh. Nullam interdum eros massa, ac
-          pharetra ex porttitor quis. Nulla eget elementum sapien, sit amet
-          scelerisque sapien. Vestibulum a venenatis lacus. Praesent dictum
-          turpis non suscipit bibendum.
-        </p>
+        <p className="text-sm sm:text-base text-gray-700">{description}</p>
       </div>
     </div>
   );
