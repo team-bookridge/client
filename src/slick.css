@@ -1,3 +1,4 @@
+/*slick.css*/
 .custom-container {
   width: 100%;
   max-width: 1200px;
@@ -21,12 +22,24 @@
 .slick-slide {
   background-color: white;
   padding: 0;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.slick-slide:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.slick-slide.slick-current {
+  border: none;
+  box-shadow: none !important;
 }
 
 .slick-slide img {
-  width: 80%;
-  height: auto;
-  margin: 0 auto;
+  width: 100% !important;
+  height: auto !important;
+  object-fit: cover;
 }
 
 .slick-list {
@@ -52,8 +65,12 @@
 }
 
 .slick-dots li button:before {
-  color: gray;
-  font-size: 5px;
+  color: #ecf39e;
+  font-size: 8px;
+}
+
+.slick-dots li button::before {
+  color: #31572c;
 }
 
 .book-card {
@@ -127,13 +144,13 @@
 }
 
 .slick-prev {
-  left: -50px;
+  left: -20px;
   top: 40%;
   transform: translate(-50%);
 }
 
 .slick-next {
-  right: -70px;
+  right: -50px;
   top: 40%;
   transform: translate(-50%);
 }
@@ -199,4 +216,38 @@
     -webkit-line-clamp: 3;
     line-clamp: 3;
   }
+}
+
+.category-container {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 100%;
+}
+
+.category-container h2 {
+  margin: 0;
+}
+
+.category-container hr {
+  width: 100%;
+  border-top: 2px solid #c0cfb2;
+}
+
+.category-container p {
+  margin: 0.5rem 0;
+}
+
+.category-container button {
+  background-color: #c0cfb2;
+  color: white;
+  padding: 0.2rem 0.6rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  margin: 0.2rem;
+}
+
+.category-container button:hover {
+  background-color: #45624e;
 }

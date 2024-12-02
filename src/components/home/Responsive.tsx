@@ -81,6 +81,12 @@ const Responsive: React.FC<ResponsiveProps> = ({ books }) => {
         },
       },
     ],
+    afterChange: () => {
+      const activeSlides = document.querySelectorAll('.slick-active');
+      activeSlides.forEach((slide) => {
+        (slide as HTMLElement).blur();
+      });
+    },
   };
 
   return (

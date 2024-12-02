@@ -1,65 +1,48 @@
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import '../../slick.css';
+import '../../simpleslider.css';
+
+interface ArrowProps {
+  className: string;
+  style: React.CSSProperties;
+  onClick: () => void;
+}
+
+const Arrow: React.FC<ArrowProps> = ({ className, style, onClick }) => {
+  const isPrev = className.includes('slick-prev');
+  return (
+    <div
+      className={`simple-slider-${isPrev ? 'prev' : 'next'}`}
+      style={style}
+      onClick={onClick}>
+      <span>{isPrev ? '<' : '>'}</span>
+    </div>
+  );
+};
 
 function SimpleSlider() {
   const settings = {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 4,
+    slidesToShow: 1,
     slidesToScroll: 1,
-    centerMode: true,
-    centerPadding: '0px',
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-          infinite: true,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 700,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          initialSlide: 2,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
+    prevArrow: <Arrow className="slick-prev" style={{}} onClick={() => {}} />,
+    nextArrow: <Arrow className="slick-next" style={{}} onClick={() => {}} />,
   };
 
   return (
-    <div className="slider-container">
-      <Slider {...settings} centerMode={true}>
-        <div>
-          <h3>1</h3>
+    <div className="simple-slider-container">
+      <Slider {...settings}>
+        <div className="simple-slider-slide">
+          <img src="https://via.placeholder.com/300x100" alt="Ad Mockup 1" />
         </div>
-        <div>
-          <h3>2</h3>
+        <div className="simple-slider-slide">
+          <img src="https://via.placeholder.com/300x100" alt="Ad Mockup 2" />
         </div>
-        <div>
-          <h3>3</h3>
-        </div>
-        <div>
-          <h3>4</h3>
-        </div>
-        <div>
-          <h3>5</h3>
-        </div>
-        <div>
-          <h3>6</h3>
+        <div className="simple-slider-slide">
+          <img src="https://via.placeholder.com/300x100" alt="Ad Mockup 3" />
         </div>
       </Slider>
     </div>
