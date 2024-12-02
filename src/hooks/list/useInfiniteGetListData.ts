@@ -8,7 +8,8 @@ const useInfiniteGetListData = (
 ) =>
   useInfiniteQuery({
     queryKey: [queryKey, String(categoryId)],
-    queryFn: ({ pageParam }) => fetchListData(queryType, categoryId, pageParam),
+    queryFn: ({ pageParam }) =>
+      fetchListData(queryType, categoryId, 10, pageParam),
     getNextPageParam: (last) => {
       let totalPage;
 
