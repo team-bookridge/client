@@ -6,15 +6,27 @@ interface Book {
   author: string;
 }
 
+const DUMMY_BOOKS = [
+  { id: 1, title: '책 제목 1', author: '작가 1' },
+  { id: 2, title: '책 제목 2', author: '작가 2' },
+  { id: 3, title: '책 제목 3', author: '작가 3' },
+  { id: 4, title: '책 제목 4', author: '작가 4' },
+  { id: 5, title: '책 제목 5', author: '작가 5' },
+];
+
 function WishList(): JSX.Element {
-  const [books, setBooks] = useState<Book[]>([]); // 초기 상태를 빈 배열로 설정
+  const [books, setBooks] = useState<Book[]>([]);
   const [selectAll, setSelectAll] = useState<boolean>(false);
   const [selectedBooks, setSelectedBooks] = useState<Set<number>>(new Set());
 
   useEffect(() => {
-    // 컴포넌트가 마운트될 때 localStorage에서 찜 목록 불러오기
     const storedWishList = JSON.parse(localStorage.getItem('wishList') || '[]');
-    setBooks(storedWishList);
+    if (storedWishList.length > 0) {
+      setBooks(storedWishList);
+    } else {
+      setBooks(DUMMY_BOOKS);
+      localStorage.setItem('wishList', JSON.stringify(DUMMY_BOOKS));
+    }
   }, []);
 
   const handleSelectAll = () => {
@@ -44,41 +56,49 @@ function WishList(): JSX.Element {
     setSelectedBooks(new Set());
     setSelectAll(false);
 
-    // 변경된 찜 목록을 localStorage에 저장
     localStorage.setItem('wishList', JSON.stringify(remainingBooks));
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen p-4">
-      <h2 className="text-xl font-bold border-b pb-2 mb-4">찜 목록</h2>
-      <div className="flex items-center gap-2 mb-4">
-        <input type="checkbox" checked={selectAll} onChange={handleSelectAll} />
-        <span className="text-sm">찜한 도서</span>
-        <button
-          type="button"
-          onClick={handleDelete}
-          className="ml-auto bg-gray-400 text-white px-4 py-2 rounded">
-          삭제
-        </button>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {books.map((book) => (
-          <div
-            key={book.id}
-            className="border rounded-lg p-4 bg-gray-200 flex items-start gap-2">
-            <input
-              type="checkbox"
-              checked={selectedBooks.has(book.id)}
-              onChange={() => handleSelect(book.id)}
-              className="mt-1"
-            />
-            <div className="flex-shrink-0 w-16 h-24 bg-gray-300" />
-            <div>
-              <p className="font-bold">{book.title}</p>
-              <p className="text-sm text-gray-600">{book.author}</p>
+    <div className="w-full flex justify-center">
+      <div className="w-full min-h-[950px] max-w-[64rem]">
+        <h2 className="text-[1.5rem] text-[#4F772D] font-bold border-b-[4px] border-[#C0CFB2] pb-[0.5rem] pt-[1.25rem] mb-[1rem] mt-[0] text-left">
+          찜 목록
+        </h2>
+        <div className="flex items-center gap-[1rem] mb-[1rem] w-full">
+          <input
+            type="checkbox"
+            checked={selectAll}
+            onChange={handleSelectAll}
+            className="w-5 h-5 border-2 border-[#4F772D] rounded-lg accent-[#4F772D]"
+          />
+          <span className="text-[1rem]">찜한 도서</span>
+          <button
+            type="button"
+            onClick={handleDelete}
+            className="ml-auto bg-[#4F772D] text-white px-[1rem] py-[0.5rem] rounded">
+            삭제
+          </button>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-[1.5rem] w-full">
+          {books.map((book) => (
+            <div
+              key={book.id}
+              className="border-[1px] border-[#4F772D] rounded-lg p-[1rem] bg-[#F1F8E9] flex items-start gap-[0.5rem]">
+              <input
+                type="checkbox"
+                checked={selectedBooks.has(book.id)}
+                onChange={() => handleSelect(book.id)}
+                className="w-5 h-5 border-2 border-[#4F772D] rounded-lg accent-[#4F772D]"
+              />
+              <div className="flex-shrink-0 w-[4rem] h-[6rem] bg-gray-300" />
+              <div>
+                <p className="font-bold text-[1rem]">{book.title}</p>
+                <p className="text-[0.875rem] text-gray-600">{book.author}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
