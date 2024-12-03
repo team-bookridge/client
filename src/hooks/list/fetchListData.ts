@@ -17,7 +17,7 @@ const fetchListData = async (
         Start: String(page),
         SearchTarget: 'Book',
         Cover: 'Big',
-        output: 'JS',
+        Output: 'JS',
         Version: '20131101',
       },
     }

@@ -10,7 +10,7 @@ const fetchDetailData = async (itemId: string | undefined) => {
         ItemIdType: 'ItemId',
         SearchTarget: 'Book',
         Cover: 'Big',
-        output: 'JS',
+        Output: 'JS',
         Version: '20131101',
       },
     }

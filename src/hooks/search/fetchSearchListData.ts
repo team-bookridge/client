@@ -12,7 +12,7 @@ const fetchSearchListData = async (query: string, page: number = 1) => {
         Sort: 'Accuracy',
         SearchTarget: 'Book',
         Cover: 'Big',
-        output: 'JS',
+        Output: 'JS',
         Version: '20131101',
       },
     }
