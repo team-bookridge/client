@@ -47,42 +47,46 @@ const Home: React.FC = () => {
   ];
 
   return (
-    <div className="custom-container">
+    <div className="home-responsive-slider-container">
       {/* SimpleSlider 섹션 */}
       <div className="ad-container">
         <SimpleSlider />
       </div>
 
-      {/* 베스트 셀러 섹션 */}
-      <div className="book-list-container">
-        <h2 className="text-[1.5rem] py-[1rem] text-[#4F772D;] border-b-4 border-[#C0CFB2] font-[900]">
-          편집자 추천
-        </h2>
-        {isBestSellerLoading ? (
-          <p>로딩 중...</p>
-        ) : (
-          <Responsive books={bestSellerData?.item} />
-        )}
-      </div>
+      {/* 섹션 래퍼 */}
+      <div className="sections-container">
+        {/* 베스트 셀러 섹션 */}
+        <div className="book-list-container">
+          <h2 className="text-[1.5rem] py-[1rem] text-[#4F772D] border-b-4 border-[#C0CFB2] font-[900]">
+            베스트 셀러
+          </h2>
+          {isBestSellerLoading ? (
+            <p>로딩 중...</p>
+          ) : (
+            <Responsive books={bestSellerData?.item} />
+          )}
+        </div>
 
-      {/* 주목할 만한 신간 섹션 */}
-      <div className="book-list-container">
-        <h2 className="text-[1.5rem] py-[1rem] text-[#4F772D;] border-b-4 border-[#C0CFB2] font-[900]">
-          주목할 만한 신간
-        </h2>
-        <hr className="divider" />
-        {isNewBookLoading ? (
-          <p>로딩 중...</p>
-        ) : (
-          <Responsive books={newBookData?.item} />
-        )}
+        {/* 주목할 만한 신간 섹션 */}
+        <div className="book-list-container">
+          <h2 className="text-[1.5rem] py-[1rem] text-[#4F772D] border-b-4 border-[#C0CFB2] font-[900]">
+            주목할 만한 신간
+          </h2>
+          <hr className="divider" />
+          {isNewBookLoading ? (
+            <p>로딩 중...</p>
+          ) : (
+            <Responsive books={newBookData?.item} />
+          )}
+        </div>
       </div>
 
       {/* 편집자 추천 섹션 */}
-      <h2 className="text-[1.5rem] py-[1rem] text-[#4F772D;] border-b-4 border-[#C0CFB2] font-[900]">
+      <h2 className="text-[1.5rem] py-[1rem] text-[#4F772D] border-b-4 border-[#C0CFB2] font-[900]">
         편집자 추천
       </h2>
       <div className="flex flex-col items-center"></div>
+
       {/* 카테고리 버튼 */}
       <div className="flex flex-wrap justify-center gap-[0.5rem] p-[0.5rem] my-[1rem] border-2 border-[#E4E6D9] rounded-[0.5rem]">
         {categories.map((el) => (
@@ -100,24 +104,25 @@ const Home: React.FC = () => {
           </button>
         ))}
       </div>
-      <div className="flex flex-wrap">
+
+      {/* 편집자 추천 리스트 */}
+      <div className="flex flex-wrap justify-center">
         {isEditorChoiceLoading ? (
           <p>로딩 중...</p>
         ) : (
           editorChoiceData?.item.map((el: TResponseBookItemInfo) => (
             <div
-              className="md:w-[25%] w590px:w-[33%] w-[50%] h-[250px]
-                flex flex-col justify-center items-center gap-[0.25rem]"
+              className="md:w-[25%] sm:w-[33%] w-[50%] h-[250px] flex flex-col justify-center items-center gap-[0.25rem] mb-[1rem]"
               key={el.itemId}>
               <Link to={`/BookDetail/${el.itemId}`}>
                 <img
-                  className="w-[144px] h-[210px]"
+                  className="w-[144px] h-[210px] object-cover"
                   src={el.cover}
                   alt={el.title}
                 />
               </Link>
               <Link
-                className="w-[144px] hover:underline text-start line-clamp-1 font-[900]"
+                className="w-[144px] hover:underline text-start line-clamp-1 font-[900] text-[0.875rem] sm:text-[1rem]"
                 to={`/BookDetail/${el.itemId}`}>
                 {el.title}
               </Link>

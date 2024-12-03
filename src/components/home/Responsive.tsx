@@ -3,15 +3,16 @@ import Slider, { Settings } from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import '../../slick.css';
+import { TResponseBookItemInfo } from '@/types';
 
 interface ResponsiveProps {
-  books: any[];
+  books: TResponseBookItemInfo[];
 }
 
 interface ArrowProps {
   className: string;
   style: React.CSSProperties;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const Arrow: React.FC<ArrowProps> = ({ className, style, onClick }) => {
@@ -50,8 +51,8 @@ const Responsive: React.FC<ResponsiveProps> = ({ books }) => {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 5,
-    slidesToScroll: 1,
+    slidesToShow: 4,
+    slidesToScroll: 4,
     centerMode: true,
     centerPadding: '0px',
     prevArrow: <Arrow className="slick-prev" style={{}} onClick={() => {}} />,
@@ -60,14 +61,14 @@ const Responsive: React.FC<ResponsiveProps> = ({ books }) => {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 4,
+          slidesToShow: 3,
           slidesToScroll: 1,
         },
       },
       {
-        breakpoint: 700,
+        breakpoint: 750,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 2,
           slidesToScroll: 1,
         },
       },
