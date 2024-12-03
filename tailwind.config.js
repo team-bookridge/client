@@ -11,6 +11,14 @@ export default {
             transform: 'translateY(0)',
           },
         },
+        sliderightToLeft: {
+          from: {
+            transform: 'translateX(100%)',
+          },
+          to: {
+            transform: 'translateX(0)',
+          },
+        },
         fadeIn: {
           from: {
             opacity: 0,
@@ -22,7 +30,9 @@ export default {
       },
       animation: {
         slideUpAndFadeIn: 'slideUp 0.4s ease-in-out, fadeIn 0.4s ease-in-out',
-        fadeIn: 'fadeIn 0.3s ease-in-out',
+        sliderightToLeft:
+          'sliderightToLeft 0.3s ease-in-out, fadeIn 0.3s ease-in-out',
+        fadeIn: 'fadeIn 0.1s ease-in-out',
       },
       screens: {
         w450px: '450px',
