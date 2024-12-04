@@ -1,10 +1,10 @@
 import fetchDetailData from '@/hooks/detail/fetchDetailData';
 import { useQuery } from '@tanstack/react-query';
 
-const useGetDetailData = (queryKey: string, ItemId: string | undefined) =>
+const useGetDetailData = (queryKey: string, itemId: string | undefined) =>
   useQuery({
-    queryKey: [queryKey, ItemId],
-    queryFn: () => fetchDetailData(ItemId),
+    queryKey: [queryKey, itemId],
+    queryFn: () => fetchDetailData(itemId),
   });
 
 export default useGetDetailData;

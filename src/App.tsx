@@ -4,6 +4,7 @@ import Footer from '@components/app/Footer';
 import Header from '@components/app/Header';
 import HeaderMenuModal from '@components/modal/HeaderMenuModal';
 import LoginModal from '@components/modal/LoginModal';
+import SearchModal from '@components/modal/SearchModal';
 import SetNickNameModal from '@components/modal/SetNickNameModal';
 import BookDetail from '@pages/BookDetail';
 import Home from '@pages/Home';
@@ -14,24 +15,29 @@ import MyPage from '@pages/MyPage';
 import Search from '@pages/Search';
 import WishList from '@pages/WishList';
 import { useState } from 'react';
-
 import { Route, Routes } from 'react-router-dom';
 
 function App() {
-  const [modal, setModal] = useState<TModal>('none');
+  const [modal, setModal] = useState<TModal>('');
 
+  if (modal) {
+    document.body.style.overflowY = 'hidden';
+  } else {
+    document.body.style.overflowY = 'auto';
+  }
   return (
     <>
-      {modal !== 'none' && (
+      {modal && (
         <div
-          className="fixed w-full h-full bg-black/50 z-30 flex justify-center"
+          className="fixed w-full h-full bg-black/50 z-30 grid"
           onClick={() => {
-            setModal('none');
+            setModal('');
           }}
           aria-hidden="true">
           {modal === 'login' && <LoginModal />}
           {modal === 'setNickName' && <SetNickNameModal />}
-          {modal === 'HeaderMenu' && <HeaderMenuModal />}
+          {modal === 'headerMenu' && <HeaderMenuModal />}
+          {modal === 'search' && <SearchModal setModal={setModal} />}
         </div>
       )}
       <Header setModal={setModal} />
