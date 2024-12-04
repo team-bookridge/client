@@ -66,6 +66,7 @@
 }
 
 .book-info {
+  width: 100%;
   margin-top: 10px;
   text-align: center;
 }
@@ -77,6 +78,8 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   max-width: 90%;
+  display: inline-block;
+  margin-bottom: 0;
 }
 
 .book-info p {
@@ -178,5 +181,29 @@
     font-size: 0.75rem;
     -webkit-line-clamp: 3;
     line-clamp: 3;
+  }
+}
+
+@media (max-width: 1024px) {
+  .section-title {
+    font-size: 1.25rem; /* 텍스트 크기 축소 */
+    padding: 0.75rem 0; /* 여백 축소 */
+    border-bottom-width: 3px; /* 선 두께 축소 */
+  }
+}
+
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 1.125rem; /* 더 작은 텍스트 크기 */
+    padding: 0.5rem 0; /* 여백 더 축소 */
+    border-bottom-width: 2px; /* 선 더 얇게 */
+  }
+}
+
+@media (max-width: 480px) {
+  .section-title {
+    font-size: 1rem; /* 모바일 환경에서 최소 크기 */
+    padding: 0.25rem 0; /* 최소 여백 */
+    border-bottom-width: 1px; /* 선 최소 두께 */
   }
 }
