@@ -34,7 +34,7 @@ function App() {
             setModal('');
           }}
           aria-hidden="true">
-          {modal === 'login' && <LoginModal />}
+          {modal === 'login' && <LoginModal onClose={() => setModal('')} />}
           {modal === 'setNickName' && <SetNickNameModal />}
           {modal === 'headerMenu' && <HeaderMenuModal />}
           {modal === 'search' && <SearchModal setModal={setModal} />}
