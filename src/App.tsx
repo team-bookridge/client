@@ -16,6 +16,8 @@ import Search from '@pages/Search';
 import WishList from '@pages/WishList';
 import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import topIcon from '@/assets/top-icon.png';
+import scrollToTop from '@/utils/scrollToTop';
 
 function App() {
   const [modal, setModal] = useState<TModal>('');
@@ -54,6 +56,12 @@ function App() {
         </Routes>
         <Footer />
       </div>
+      <button
+        className="fixed w-[3rem] bottom-[1rem] right-[1rem] z-10 opacity-30"
+        type="button"
+        onClick={scrollToTop}>
+        <img src={topIcon} alt="탑" />
+      </button>
     </>
   );
 }
