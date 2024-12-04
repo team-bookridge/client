@@ -7,7 +7,7 @@ interface Props {
   setSelectedCategory: Dispatch<SetStateAction<number>>;
 }
 
-function Category({ selectedCategory, setSelectedCategory }: Props) {
+function CategoryH({ selectedCategory, setSelectedCategory }: Props) {
   const queryClient = useQueryClient();
   const categories: TCategory[] = [
     {
@@ -62,10 +62,6 @@ function Category({ selectedCategory, setSelectedCategory }: Props) {
       id: 55890,
       name: '건강/취미',
     },
-    {
-      id: 2913,
-      name: '잡지',
-    },
   ];
 
   return (
@@ -86,4 +82,4 @@ function Category({ selectedCategory, setSelectedCategory }: Props) {
   );
 }
 
-export default Category;
+export default CategoryH;
