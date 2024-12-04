@@ -46,7 +46,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/BestSeller" element={<BestSeller />} />
           <Route path="/NewBook" element={<NewBook />} />
-          <Route path="/EditorChoice" element={<EditorChoice />} />
+          <Route path="/EditorChoice/:categoryId" element={<EditorChoice />} />
           <Route path="/Search" element={<Search />} />
           <Route path="/MyPage" element={<MyPage />} />
           <Route path="/MyPage/WishList" element={<WishList />} />
