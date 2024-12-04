@@ -23,7 +23,7 @@ function Header({ setModal }: Props) {
         </button>
         <div className="flex gap-[1rem]">
           <Link to="/">
-            <img className="h-[3rem]" src={logoIcon} alt="로고" />
+            <img className="h-[1.875rem]" src={logoIcon} alt="로고" />
           </Link>
           <div className="hidden gap-[0.5rem] md:flex">
             <Link
@@ -38,7 +38,7 @@ function Header({ setModal }: Props) {
             </Link>
             <Link
               className="flex items-center hover:text-[#809671] text-[#31572c]"
-              to="/EditorChoice">
+              to="/EditorChoice/170">
               <div className="text-[1.125rem] font-[600]">편집자추천</div>
             </Link>
           </div>
