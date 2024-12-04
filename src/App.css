@@ -8,6 +8,10 @@
 *::after {
   box-sizing: border-box;
   font-display: block;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 html,
@@ -109,6 +113,24 @@ li {
   display: flex;
   justify-content: center;
   min-height: 100vh;
+}
+
+/* 스크롤바 디자인 */
+
+.scrollCSS::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+.scrollCSS::-webkit-scrollbar-thumb {
+  background: #cccccc;
+  border-radius: 0.25rem;
+}
+
+.scrollCSS::-webkit-scrollbar-button:start:decrement,
+.scrollCSS::-webkit-scrollbar-button:end:increment {
+  display: block;
+  height: 0;
+  background-color: transparent;
 }
 
 .container {

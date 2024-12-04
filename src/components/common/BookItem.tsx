@@ -10,7 +10,7 @@ interface Props {
 function BookItem({ bookInfo }: Props) {
   return (
     <div className="flex flex-col gap-[1.5rem] px-[0.5rem] py-[1rem] w-[100%] border-b-2 border-[#C0CFB2]">
-      <div className="flex h-[16.5rem] gap-[1rem]">
+      <div className="flex gap-[1rem]">
         <div className="min-w-[9rem] max-w-[9rem]">
           <Link to={`/BookDetail/${bookInfo.itemId}`}>
             <img

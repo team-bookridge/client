@@ -1,4 +1,4 @@
-export type TModal = 'none' | 'login' | 'setNickName' | 'HeaderMenu';
+export type TModal = '' | 'login' | 'setNickName' | 'headerMenu' | 'search';
 
 export type TCategory = {
   id: number;
