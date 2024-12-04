@@ -1,6 +1,6 @@
 import useGetListData from '@/hooks/list/useGetListData';
 import { TResponseBookItemInfo } from '@/types';
-import Category from '@components/common/Category';
+import CategoryH from '@/components/home/CategoryH';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import SimpleSlider from '../components/home/SimpleSlider';
@@ -24,7 +24,7 @@ function Home() {
       <h2 className="text-[1.5rem] py-[1rem] text-[#4F772D;] border-b-4 border-[#C0CFB2] font-[900]">
         편집자추천
       </h2>
-      <Category
+      <CategoryH
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
       />
