@@ -61,7 +61,7 @@ function SearchModal({ setModal }: Props) {
           취소
         </button>
       </div>
-      <div className="flex-grow flex flex-col overflow-y-auto">
+      <div className="flex-grow flex flex-col overflow-y-auto scrollCSS">
         {!isLoading &&
           data?.item?.map((bookInfo: TResponseBookItemInfo) => (
             <div
