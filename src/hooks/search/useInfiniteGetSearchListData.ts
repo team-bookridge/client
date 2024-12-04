@@ -3,8 +3,8 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 
 const useInfiniteGetSearchListData = (queryKey: string, query: string) =>
   useInfiniteQuery({
-    queryKey: [queryKey],
-    queryFn: ({ pageParam }) => fetchSearchListData(query, pageParam),
+    queryKey: [queryKey, query],
+    queryFn: ({ pageParam }) => fetchSearchListData(query, pageParam, 10),
     getNextPageParam: (last) => {
       let totalPage;
 

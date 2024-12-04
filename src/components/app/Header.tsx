@@ -1,6 +1,5 @@
-import { useState } from 'react';
-import logo from '@/assets/logo.png';
-import { Link, useNavigate } from 'react-router-dom';
+import logoIcon from '@/assets/logo-icon.png';
+import { Link } from 'react-router-dom';
 import type { Dispatch, SetStateAction } from 'react';
 import { TModal } from '@/types';
 
@@ -9,9 +8,6 @@ interface Props {
 }
 
 function Header({ setModal }: Props) {
-  const navigate = useNavigate();
-  const [query, setQuery] = useState<string>('');
-  const [activeSearchBar, setActiveSearchBar] = useState<boolean>(false);
   return (
     <div
       className="fixed top-0 flex flex-col max-w-[64rem] w-full px-[1.25rem] 
@@ -21,13 +17,13 @@ function Header({ setModal }: Props) {
           className="md:hidden text-[1.25rem] text-[#31572c] font-[600]"
           type="button"
           onClick={() => {
-            setModal('HeaderMenu');
+            setModal('headerMenu');
           }}>
           ☰
         </button>
         <div className="flex gap-[1rem]">
           <Link to="/">
-            <img className="h-[3rem]" src={logo} alt="로고" />
+            <img className="h-[3rem]" src={logoIcon} alt="로고" />
           </Link>
           <div className="hidden gap-[0.5rem] md:flex">
             <Link
@@ -52,7 +48,7 @@ function Header({ setModal }: Props) {
             className="text-[1.25rem] text-[#31572c] font-[600]"
             type="button"
             onClick={() => {
-              setActiveSearchBar(!activeSearchBar);
+              setModal('search');
             }}>
             🔍︎
           </button>
@@ -66,30 +62,6 @@ function Header({ setModal }: Props) {
           </button>
         </div>
       </div>
-      {activeSearchBar && (
-        <div className="flex w-[17.5rem] rounded-full border-2 px-[1rem] gap-[0.5rem]">
-          <span>🔍︎</span>
-          <input
-            className="focus:outline-none flex-grow"
-            type="text"
-            onChange={(e) => {
-              setQuery(e.target.value);
-            }}
-            onKeyUp={(e) => {
-              if (e.key === 'Enter') {
-                if (query.trim() !== '') {
-                  navigate(`/Search?query=${query}`);
-                  setActiveSearchBar(false);
-                  setQuery('');
-                } else {
-                  setQuery('');
-                }
-              }
-            }}
-            value={query}
-          />
-        </div>
-      )}
     </div>
   );
 }
