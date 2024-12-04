@@ -43,7 +43,7 @@ function App() {
         </div>
       )}
       <Header setModal={setModal} />
-      <div className="flex flex-col w-[64rem] gap-6 px-[1.25rem] pt-[5rem]">
+      <div className="flex flex-col w-[100%] max-w-[64rem] gap-6 px-[1.25rem] pt-[5rem]">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/BestSeller" element={<BestSeller />} />

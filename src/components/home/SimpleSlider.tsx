@@ -1,8 +1,8 @@
 import React from 'react';
 import Slider from 'react-slick';
+import '../../simpleslider.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import '../../simpleslider.css';
 
 interface ArrowProps {
   className?: string;
@@ -28,7 +28,7 @@ const SimpleSlider: React.FC = () => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    adaptiveHeight: false,
+    adaptiveHeight: true,
     prevArrow: <Arrow className="slick-prev" />,
     nextArrow: <Arrow className="slick-next" />,
     responsive: [

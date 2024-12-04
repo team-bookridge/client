@@ -4,23 +4,42 @@ import CategoryH from '@/components/home/CategoryH';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import SimpleSlider from '../components/home/SimpleSlider';
+import Responsive from '@components/home/Responsive';
 
 function Home() {
-  const [selectedCategory, setSelectedCategory] = useState<number>(170);
+  const { data: bestSellerData, isLoading: isBestSellerLoading } =
+    useGetListData('SlickBestSeller', 'Bestseller');
 
-  const { data, isLoading } = useGetListData(
-    'EditorChoice-Home',
-    'ItemEditorChoice',
-    selectedCategory,
-    12
+  const { data: newBookData, isLoading: isNewBookLoading } = useGetListData(
+    'SlickNewBook',
+    'ItemNewSpecial'
   );
 
-  return (
-    <div className="flex flex-col">
-      <div className="ad-container">
-        <SimpleSlider />
-      </div>
+  const [selectedCategory, setSelectedCategory] = useState<number>(170);
 
+  const { data: editorChoiceData, isLoading: isEditorChoiceLoading } =
+    useGetListData(
+      'EditorChoice-Home',
+      'ItemEditorChoice',
+      selectedCategory,
+      12
+    );
+
+  return (
+    <>
+      <SimpleSlider />
+      <h2 className="text-[1.5rem] py-[1rem] text-[#4F772D;] border-b-4 border-[#C0CFB2] font-[900]">
+        베스트 셀러
+      </h2>
+      {!isBestSellerLoading && bestSellerData?.item && (
+        <Responsive books={bestSellerData.item} />
+      )}
+      <h2 className="text-[1.5rem] py-[1rem] text-[#4F772D;] border-b-4 border-[#C0CFB2] font-[900]">
+        주목할 만한 신간
+      </h2>
+      {!isNewBookLoading && newBookData?.item && (
+        <Responsive books={newBookData.item} />
+      )}
       <h2 className="text-[1.5rem] py-[1rem] text-[#4F772D;] border-b-4 border-[#C0CFB2] font-[900]">
         편집자추천
       </h2>
@@ -30,8 +49,8 @@ function Home() {
       />
 
       <div className="flex flex-wrap">
-        {!isLoading &&
-          data?.item.map((el: TResponseBookItemInfo) => (
+        {!isEditorChoiceLoading &&
+          editorChoiceData?.item.map((el: TResponseBookItemInfo) => (
             <div
               className="md:w-[25%] w590px:w-[33%] w-[50%] h-[250px] 
               flex flex-col justify-center items-center gap-[0.25rem]"
@@ -51,7 +70,7 @@ function Home() {
             </div>
           ))}
       </div>
-    </div>
+    </>
   );
 }
 

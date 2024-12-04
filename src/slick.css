@@ -1,7 +1,7 @@
 /* slick.css */
 .home-responsive-slider-container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1024px;
   margin: 0 auto;
   padding: 0 20px;
 }
@@ -140,70 +140,4 @@
 .slick-prev:hover,
 .slick-next:hover {
   background-color: transparent;
-}
-
-@media (max-width: 1024px) {
-  .book-card {
-    width: calc(50% - 20px);
-  }
-  .book-info h3 {
-    font-size: 0.95rem;
-  }
-  .book-info p {
-    font-size: 0.85rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .book-card {
-    width: calc(50% - 15px);
-  }
-  .book-info h3 {
-    font-size: 0.9rem;
-    white-space: nowrap;
-  }
-  .book-info p {
-    font-size: 0.8rem;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
-  }
-}
-
-@media (max-width: 480px) {
-  .book-card {
-    width: calc(100% - 20px);
-  }
-  .book-info h3 {
-    font-size: 0.85rem;
-    white-space: nowrap;
-  }
-  .book-info p {
-    font-size: 0.75rem;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
-  }
-}
-
-@media (max-width: 1024px) {
-  .section-title {
-    font-size: 1.25rem; /* 텍스트 크기 축소 */
-    padding: 0.75rem 0; /* 여백 축소 */
-    border-bottom-width: 3px; /* 선 두께 축소 */
-  }
-}
-
-@media (max-width: 768px) {
-  .section-title {
-    font-size: 1.125rem; /* 더 작은 텍스트 크기 */
-    padding: 0.5rem 0; /* 여백 더 축소 */
-    border-bottom-width: 2px; /* 선 더 얇게 */
-  }
-}
-
-@media (max-width: 480px) {
-  .section-title {
-    font-size: 1rem; /* 모바일 환경에서 최소 크기 */
-    padding: 0.25rem 0; /* 최소 여백 */
-    border-bottom-width: 1px; /* 선 최소 두께 */
-  }
 }
