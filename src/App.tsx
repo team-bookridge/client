@@ -36,11 +36,7 @@ function App() {
             setModal('');
           }}
           aria-hidden="true">
-<<<<<<< Updated upstream
           {modal === 'login' && <LoginModal onClose={() => setModal('')} />}
-=======
-          {modal === 'login' && <LoginModal onClose={() => setModal('none')} />}
->>>>>>> Stashed changes
           {modal === 'setNickName' && <SetNickNameModal />}
           {modal === 'headerMenu' && <HeaderMenuModal />}
           {modal === 'search' && <SearchModal setModal={setModal} />}

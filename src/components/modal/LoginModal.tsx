@@ -6,16 +6,6 @@ export default function LoginModal({ onClose }: LoginModalProps) {
   return (
     <div
       className="fixed inset-0 bg-black/50 z-50 flex justify-center items-center"
-<<<<<<< Updated upstream
-      onClick={onClose}
-      aria-hidden="true">
-      <div
-        className="bg-white rounded-lg w-[90%] max-w-[25rem] p-6 shadow-lg relative"
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-        aria-hidden="true">
-=======
       onClick={(e) => {
         e.stopPropagation();
       }}
@@ -29,7 +19,6 @@ export default function LoginModal({ onClose }: LoginModalProps) {
           X
         </button>
 
->>>>>>> Stashed changes
         {/* 모달 제목 */}
         <h2 className="text-center text-lg font-semibold text-[#4F772D]">
           로그인
