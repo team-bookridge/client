@@ -1,82 +1,129 @@
-/* simpleslider.css */
-
-/* 슬라이더 컨테이너 */
-.home-simple-slider-container {
-  width: 100%;
+/* 심플 슬라이더 컨테이너 */
+.simple-slider-container {
+  width: 100%; /* 슬라이더 컨테이너의 너비를 전체로 설정 */
 }
 
-/* 슬라이더 버튼 */
+/* 이전 및 다음 버튼 스타일 */
 .simple-slider-prev,
 .simple-slider-next {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 40px;
-  height: 40px;
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 50%;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 18px;
-  color: #000;
-  cursor: pointer;
-  z-index: 2;
+  display: flex; /* 버튼 내부 요소를 Flexbox로 정렬 */
+  justify-content: center; /* 버튼 내부 요소를 가로로 중앙 정렬 */
+  align-items: center; /* 버튼 내부 요소를 세로로 중앙 정렬 */
+  width: 40px; /* 버튼의 가로 크기 */
+  height: 40px; /* 버튼의 세로 크기 */
+  background-color: rgba(255, 255, 255, 0.8); /* 반투명 흰색 배경 */
+  border-radius: 50%; /* 버튼을 원형으로 만듦 */
+  position: absolute; /* 버튼 위치를 슬라이더 내부에 고정 */
+  top: 50%; /* 버튼을 슬라이더의 수직 중앙에 배치 */
+  transform: translateY(-50%); /* 버튼 위치를 수직 중앙으로 보정 */
+  font-size: 18px; /* 버튼 내부 글자 크기 */
+  color: #000; /* 버튼 내부 글자 색상 */
+  cursor: pointer; /* 버튼 위에 마우스를 올릴 때 포인터 모양 표시 */
+  z-index: 2; /* 다른 요소들보다 위에 표시되도록 설정 */
 }
 
 .simple-slider-prev {
-  left: 15px;
+  left: 15px; /* 이전 버튼의 위치를 슬라이더 왼쪽으로 설정 */
 }
 
 .simple-slider-next {
-  right: 15px;
+  right: 15px; /* 다음 버튼의 위치를 슬라이더 오른쪽으로 설정 */
 }
 
-/* 버튼 호버 효과 */
+/* 호버 시 버튼 스타일 */
 .simple-slider-prev:hover,
 .simple-slider-next:hover {
-  background-color: rgba(0, 0, 0, 0.8);
-  color: #fff;
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.8
+  ); /* 호버 시 버튼 배경색을 진한 검정으로 변경 */
+  color: #fff; /* 호버 시 버튼 글자 색상을 흰색으로 변경 */
 }
 
-/* 슬라이더 이미지 */
+/* 슬라이드 이미지 스타일 */
 .simple-slider-slide img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
+  width: 100%; /* 이미지의 너비를 슬라이더에 맞춤 */
+  height: auto; /* 이미지 높이를 비율에 맞게 조정 */
+  object-fit: cover; /* 이미지 비율 유지 및 잘림 방지 */
 }
 
-/* 반응형 */
+/* dots 스타일 */
+.simple-slider-dots {
+  display: flex; /* 점들을 Flexbox로 정렬 */
+  justify-content: center; /* 점들을 중앙에 배치 */
+  margin-top: 20px; /* 점과 슬라이더 사이 간격 조정 */
+}
+
+.simple-slider-dots li {
+  margin: 0 5px; /* 점들 간의 간격 조정 */
+}
+
+.simple-slider-dots li button {
+  background: rgba(
+    100,
+    150,
+    80,
+    0.5
+  ); /* 비활성화된 점의 배경색 (녹색 계열 반투명) */
+  border-radius: 50%; /* 점을 원형으로 설정 */
+  width: 4px; /* 점의 너비 */
+  height: 4px; /* 점의 높이 */
+  border: none; /* 점의 테두리 제거 */
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease; /* 점 색상과 크기의 전환 효과 */
+}
+
+/* 활성화된 점 스타일 */
+.simple-slider-dots li.slick-active button {
+  background: #4f772d; /* 활성화된 점의 색상 (진한 녹색) */
+  transform: scale(1.3); /* 활성화된 점을 확대 */
+}
+
+/* 점 호버 시 애니메이션 */
+.simple-slider-dots li button:hover {
+  background: rgba(
+    144,
+    169,
+    85,
+    0.8
+  ); /* 호버 시 점의 색상을 밝은 녹색으로 변경 */
+  transform: scale(1.3); /* 호버 시 점 크기 확대 */
+}
+
+/* 반응형 스타일 */
 @media (max-width: 768px) {
   .simple-slider-prev,
   .simple-slider-next {
-    width: 30px;
-    height: 30px;
-    font-size: 16px;
+    width: 30px; /* 버튼 크기를 줄임 */
+    height: 30px; /* 버튼 높이 줄임 */
+    font-size: 16px; /* 버튼 글자 크기 축소 */
   }
 
   .simple-slider-prev {
-    left: 10px;
+    left: 10px; /* 이전 버튼의 위치를 더 안쪽으로 이동 */
   }
 
   .simple-slider-next {
-    right: 10px;
+    right: 10px; /* 다음 버튼의 위치를 더 안쪽으로 이동 */
   }
 }
 
 @media (max-width: 480px) {
   .simple-slider-prev,
   .simple-slider-next {
-    width: 25px;
-    height: 25px;
-    font-size: 14px;
+    width: 25px; /* 버튼 크기를 더 줄임 */
+    height: 25px; /* 버튼 높이를 더 줄임 */
+    font-size: 14px; /* 버튼 글자 크기 축소 */
   }
 
   .simple-slider-prev {
-    left: 5px;
+    left: 5px; /* 이전 버튼의 위치를 더욱 안쪽으로 이동 */
   }
 
   .simple-slider-next {
-    right: 5px;
+    right: 5px; /* 다음 버튼의 위치를 더욱 안쪽으로 이동 */
   }
 }
