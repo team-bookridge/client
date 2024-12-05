@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const fetchDetailData = async (itemId: string | undefined) => {
+const fetchDetailData = async (itemId: string) => {
   const response = await axios.get(
     `${import.meta.env.VITE_PROXY_OPEN_API_URL}/aladin/detail`,
     {

@@ -45,8 +45,13 @@ function SearchModal({ setModal }: Props) {
             }}
             onKeyUp={(e) => {
               if (e.key === 'Enter') {
-                navigate(`/Search?query=${query}`);
-                setModal('');
+                if (query.trim().length !== 0) {
+                  navigate(`/Search?query=${query}`);
+                  setModal('');
+                } else {
+                  console.log('검색어를 입력해주세요');
+                  setQuery('');
+                }
               }
             }}
             value={query}
