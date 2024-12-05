@@ -12,12 +12,19 @@ const fetchSearchListData = async (
         ttbKey: import.meta.env.VITE_ALADIN_API_KEY,
         Query: query,
         QueryType: 'Keyword',
+<<<<<<< Updated upstream
         MaxResults: String(maxResults),
+=======
+>>>>>>> Stashed changes
         Start: String(page),
         Sort: 'Accuracy',
         SearchTarget: 'Book',
         Cover: 'Big',
+<<<<<<< Updated upstream
         Output: 'JS',
+=======
+        output: 'JS',
+>>>>>>> Stashed changes
         Version: '20131101',
       },
     }

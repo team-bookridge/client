@@ -1,6 +1,10 @@
 import axios from 'axios';
 
+<<<<<<< Updated upstream
+const fetchDetailData = async (itemId: string) => {
+=======
 const fetchDetailData = async (itemId: string | undefined) => {
+>>>>>>> Stashed changes
   const response = await axios.get(
     `${import.meta.env.VITE_PROXY_OPEN_API_URL}/aladin/detail`,
     {
@@ -10,7 +14,11 @@ const fetchDetailData = async (itemId: string | undefined) => {
         ItemIdType: 'ItemId',
         SearchTarget: 'Book',
         Cover: 'Big',
+<<<<<<< Updated upstream
         Output: 'JS',
+=======
+        output: 'JS',
+>>>>>>> Stashed changes
         Version: '20131101',
       },
     }

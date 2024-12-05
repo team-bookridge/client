@@ -1,6 +1,5 @@
 import '@/App.css';
 import { TModal } from '@/types';
-import Footer from '@components/app/Footer';
 import Header from '@components/app/Header';
 import HeaderMenuModal from '@components/modal/HeaderMenuModal';
 import LoginModal from '@components/modal/LoginModal';
@@ -27,6 +26,7 @@ function App() {
   } else {
     document.body.style.overflowY = 'auto';
   }
+
   return (
     <>
       {modal && (
@@ -36,14 +36,18 @@ function App() {
             setModal('');
           }}
           aria-hidden="true">
+<<<<<<< Updated upstream
           {modal === 'login' && <LoginModal onClose={() => setModal('')} />}
+=======
+          {modal === 'login' && <LoginModal onClose={() => setModal('none')} />}
+>>>>>>> Stashed changes
           {modal === 'setNickName' && <SetNickNameModal />}
           {modal === 'headerMenu' && <HeaderMenuModal />}
           {modal === 'search' && <SearchModal setModal={setModal} />}
         </div>
       )}
       <Header setModal={setModal} />
-      <div className="flex flex-col w-[64rem] gap-6 px-[1.25rem] pt-[5rem]">
+      <div className="flex flex-col w-full h-full max-w-[64rem] px-[1.25rem] pt-[3rem]">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/BestSeller" element={<BestSeller />} />
@@ -54,7 +58,6 @@ function App() {
           <Route path="/MyPage/WishList" element={<WishList />} />
           <Route path="/BookDetail/:itemId" element={<BookDetail />} />
         </Routes>
-        <Footer />
       </div>
       <button
         className="fixed w-[3rem] bottom-[1rem] right-[1rem] z-10 opacity-30"
