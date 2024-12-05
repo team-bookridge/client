@@ -6,7 +6,7 @@ export default function LoginModal({ onClose }: LoginModalProps) {
   return (
     <div
       className="fixed inset-0 bg-black/50 z-50 flex justify-center items-center"
-      onClick={onClose} // 딤드 클릭 시 모달 닫힘
+      onClick={onClose}
       aria-hidden="true">
       <div
         className="bg-white rounded-lg w-[90%] max-w-[25rem] p-6 shadow-lg relative"

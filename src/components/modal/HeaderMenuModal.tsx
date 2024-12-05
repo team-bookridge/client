@@ -18,7 +18,7 @@ function HeaderMenuModal() {
         </Link>
         <Link
           className="flex-grow flex justify-center items-center hover:bg-gray-400"
-          to="/EditorChoice">
+          to="/EditorChoice/170">
           <span>편집자추천</span>
         </Link>
       </div>

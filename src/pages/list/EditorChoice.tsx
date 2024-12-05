@@ -1,19 +1,17 @@
 import useInfiniteGetListData from '@/hooks/list/useInfiniteGetListData';
 import { TResponseBookItemInfo } from '@/types';
 import BookItem from '@components/common/BookItem';
-import Category from '@components/common/Category';
-import { useEffect, useState } from 'react';
+import CategoryE from '@components/EditorChoice/CategoryE';
+import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { useParams } from 'react-router-dom';
 
 function EditorChoice() {
-  const [selectedCategory, setSelectedCategory] = useState<number>(170);
+  const param = useParams();
+  const categoryId = Number(param.categoryId);
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteGetListData(
-      'EditorChoice-List',
-      'ItemEditorChoice',
-      selectedCategory
-    );
+    useInfiniteGetListData('EditorChoice-List', 'ItemEditorChoice', categoryId);
 
   const { ref, inView } = useInView();
 
@@ -29,10 +27,7 @@ function EditorChoice() {
       <h2 className="text-[1.5rem] py-[1rem] text-[#4F772D;] border-b-4 border-[#C0CFB2] font-[900]">
         편집자추천
       </h2>
-      <Category
-        selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
-      />
+      <CategoryE categoryId={categoryId} />
       <div className="flex flex-wrap">
         {!isLoading &&
           data?.pages.map((page) =>
