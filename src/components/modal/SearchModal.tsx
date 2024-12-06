@@ -1,17 +1,14 @@
 import useGetSearchListData from '@/hooks/search/useGetSearchListData';
-import { TResponseBookItemInfo, TModal } from '@/types';
+import { TResponseBookItemInfo } from '@/types';
 import { useEffect, useState } from 'react';
 import { useDebounce } from 'use-debounce';
 import { useNavigate } from 'react-router-dom';
-import type { Dispatch, SetStateAction } from 'react';
 import searchIcon from '@/assets/search-icon.png';
+import useModalStore from '@/stores/modalStore';
 
-interface Props {
-  setModal: Dispatch<SetStateAction<TModal>>;
-}
-
-function SearchModal({ setModal }: Props) {
+function SearchModal() {
   const navigate = useNavigate();
+  const { setModal } = useModalStore((state) => state);
 
   const [query, setQuery] = useState<string>('');
   const [debouncedQuery] = useDebounce(query, 100);
@@ -47,9 +44,8 @@ function SearchModal({ setModal }: Props) {
               if (e.key === 'Enter') {
                 if (query.trim().length !== 0) {
                   navigate(`/Search?query=${query}`);
-                  setModal('');
+                  setModal(null);
                 } else {
-                  console.log('검색어를 입력해주세요');
                   setQuery('');
                 }
               }
@@ -62,7 +58,7 @@ function SearchModal({ setModal }: Props) {
           className="hover:bg-[#45624E] bg-[#C0CFB2] text-[1.125rem] text-[white] font-[900] 
           rounded-[0.25rem] px-[0.75rem] py-[0.25rem]"
           type="button"
-          onClick={() => setModal('')}>
+          onClick={() => setModal(null)}>
           취소
         </button>
       </div>
@@ -74,7 +70,7 @@ function SearchModal({ setModal }: Props) {
               key={bookInfo.itemId}
               onClick={() => {
                 navigate(`/BookDetail/${bookInfo.itemId}`);
-                setModal('');
+                setModal(null);
               }}
               aria-hidden="true">
               <img
