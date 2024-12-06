@@ -62,17 +62,17 @@ function WishList(): JSX.Element {
   return (
     <div className="w-full flex justify-center">
       <div className="w-full min-h-[950px] max-w-[64rem]">
-        <h2 className="text-[1.5rem] text-[#4F772D] font-bold border-b-[4px] border-[#C0CFB2] pb-[0.5rem] pt-[1.25rem] mb-[1rem] mt-[0] text-left">
+        <h2 className="text-[1.5rem] font-bold text-[#4F772D] border-b-4 border-[#C0CFB2] py-[1rem] w-full text-left">
           찜 목록
         </h2>
-        <div className="flex items-center gap-[1rem] mb-[1rem] w-full">
+        <div className="flex items-center pt-6 pb-4 mb-[1rem] w-full">
           <input
             type="checkbox"
             checked={selectAll}
             onChange={handleSelectAll}
             className="w-5 h-5 border-2 border-[#4F772D] rounded-lg accent-[#4F772D]"
           />
-          <span className="text-[1rem]">찜한 도서</span>
+          <span className="ml-[1rem] text-[1rem]">찜한 도서</span>
           <button
             type="button"
             onClick={handleDelete}

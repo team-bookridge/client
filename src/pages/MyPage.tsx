@@ -16,9 +16,9 @@ function MyPage({ setModal }: MyPageProps): JSX.Element {
   }, []);
 
   return (
-    <div className="flex flex-col items-center min-h-[950px] w-full mx-auto gap-6 px-4 pt-6">
+    <div className="flex flex-col items-center min-h-[950px] w-full mx-auto gap-6">
       {/* 페이지 헤더 */}
-      <h2 className="text-2xl font-bold text-[#4F772D] border-b-4 border-[#C0CFB2] pb-2 text-left w-full max-w-[40rem]">
+      <h2 className="text-[1.5rem] font-bold text-[#4F772D] border-b-4 border-[#C0CFB2] py-[1rem] w-full text-left">
         마이페이지
       </h2>
       {/* 마이페이지 전체 박스 */}
