@@ -1,12 +1,46 @@
 import { useParams } from 'react-router-dom';
+import { useState } from 'react';
 import useGetDetailData from '@/hooks/detail/useGetDetailData';
+import LinkButton from '@/components/common/LinkButton';
+import ReviewForm from '@/components/home/ReviewForm';
+import ReviewList from '@/components/home/ReviewList';
 
-function BookDetail() {
+interface Review {
+  id: string;
+  text: string;
+}
+
+function BookDetail(): JSX.Element {
   const { itemId } = useParams<{ itemId: string }>();
-  const { data, isLoading, error } = useGetDetailData('bookDetail', itemId);
 
-  console.log('Route Param ItemId:', itemId);
-  console.log('Fetched Data:', data);
+  const validItemId = itemId || '';
+
+  const { data, isLoading, error } = useGetDetailData(
+    'bookDetail',
+    validItemId
+  );
+
+  const [isLiked, setIsliked] = useState(false);
+  const [reviews, setReviews] = useState<Review[]>([]);
+
+  const toggleLike = () => {
+    setIsliked(!isLiked);
+  };
+
+  const handleAddReview = (text: string) => {
+    const newReview: Review = { id: Date.now().toString(), text };
+    setReviews([...reviews, newReview]);
+  };
+
+  const handleDeleteReview = (id: string) => {
+    const updatedReview = reviews.filter((review) => review.id !== id);
+    setReviews(updatedReview);
+  };
+
+  if (!itemId) {
+    console.error('Error: itemId is undefined.');
+    return <div>Invalid item ID</div>;
+  }
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -40,12 +74,12 @@ function BookDetail() {
     <div className="h-full p-4 sm:p-6">
       <div className="flex flex-col sm:flex-row border-b pb-4 bg-white rounded-lg shadow-md p-4">
         <div className="sm:w-1/4 w-full mb-4 sm:mb-0">
-          <div className="w-full h-60 bg-gray-300 flex items-center justify-center">
+          <div className="relative w-full pt-[150%] bg-gray-300 rounded-lg overflow-hidden">
             {cover ? (
               <img
                 src={cover}
                 alt={title}
-                className="w-full h-full object-cover"
+                className="absolute top-0 left-0 flex items-center justify-center w-full h-full"
               />
             ) : (
               <span>No Cover Available</span>
@@ -55,44 +89,40 @@ function BookDetail() {
         <div className="sm:ml-6 flex-1">
           <div className="flex items-center justify-between mb-4">
             <h1 className="text-lg sm:text-xl font-bold">{title}</h1>
+            <button
+              type="button"
+              onClick={toggleLike}
+              className={`text-xl sm:text-2xl ${
+                isLiked ? 'text-pink-500' : 'text-gray-400'
+              }`}
+              aria-label="찜버튼">
+              ♥
+            </button>
           </div>
-          <p className="text-sm sm:text-base text-gray-700">Author: {author}</p>
+          <p className="text-sm sm:text-base text-gray-700">저자 : {author}</p>
           <p className="text-sm sm:text-base text-gray-700">
-            Publisher: {publisher}
+            출판사 : {publisher}
           </p>
           <p className="text-sm sm:text-base text-gray-700">
-            Publication Date: {pubDate}
+            출판일 : {pubDate}
           </p>
           <p className="text-sm sm:text-base text-gray-700">
-            Price: {priceStandard}
+            가격 : {priceStandard}
           </p>
         </div>
       </div>
-
-      <div className="flex flex-wrap justify-around mt-6 border-b pb-4 gap-2">
-        <button
-          type="button"
-          className="w-full sm:w-auto px-6 py-2 bg-gray-200 rounded">
-          교보문고
-        </button>
-        <button
-          type="button"
-          className="w-full sm:w-auto px-6 py-2 bg-gray-200 rounded">
-          예스 24
-        </button>
-        <button
-          type="button"
-          className="w-full sm:w-auto px-6 py-2 bg-gray-200 rounded">
-          알라딘
-        </button>
+      <div className="flex flex-wrap justify-center mt-6 border-b pb-4 gap-2">
+        <LinkButton bookInfo={book} siteName="알라딘" />
+        <LinkButton bookInfo={book} siteName="교보문고" />
+        <LinkButton bookInfo={book} siteName="예스24" />
       </div>
 
       <div className="mt-6 bg-white rounded-lg shadow-md p-4">
-        <h2 className="text-base sm:text-lg font-semibold mb-4">
-          Book Summary
-        </h2>
+        <h2 className="text-base sm:text-lg font-semibold mb-4">설명</h2>
         <p className="text-sm sm:text-base text-gray-700">{description}</p>
       </div>
+      <ReviewForm onAddReview={handleAddReview} />
+      <ReviewList reviews={reviews} onDeleteReview={handleDeleteReview} />
     </div>
   );
 }
