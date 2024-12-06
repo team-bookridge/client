@@ -3,8 +3,43 @@ import { Link } from 'react-router-dom';
 import type { Dispatch, SetStateAction } from 'react';
 import { TModal } from '@/types';
 
-interface MyPageProps {
+type MyPageProps = {
   setModal: Dispatch<SetStateAction<TModal>>;
+};
+
+type ProfileProps = {
+  name: string;
+  emailOrId: string;
+};
+
+type InfoButtonProps = {
+  label: string;
+  onClick: () => void;
+};
+
+function Profile({ name, emailOrId }: ProfileProps): JSX.Element {
+  return (
+    <div className="flex items-center gap-4">
+      <div className="w-[6rem] h-[6rem] md:w-[8rem] md:h-[8rem] bg-[#C0CFB2] rounded-full" />
+      <div>
+        <p className="font-bold text-lg text-center md:text-left">{name}</p>
+        <p className="text-sm text-gray-600 text-center md:text-left">
+          {emailOrId}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function InfoButton({ label, onClick }: InfoButtonProps): JSX.Element {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="text-white bg-[#4F772D] w-[8rem] py-3 rounded hover:bg-[#3b5e23] text-center">
+      {label}
+    </button>
+  );
 }
 
 function MyPage({ setModal }: MyPageProps): JSX.Element {
@@ -24,29 +59,18 @@ function MyPage({ setModal }: MyPageProps): JSX.Element {
       {/* 마이페이지 전체 박스 */}
       <div className="flex flex-col w-full max-w-[40rem] p-6 rounded-lg border border-[#4F772D]">
         <div className="flex flex-col md:flex-row items-center justify-between w-full gap-4">
-          <div className="flex items-center gap-4">
-            <div className="w-[6rem] h-[6rem] md:w-[8rem] md:h-[8rem] bg-[#C0CFB2] rounded-full" />
-            <div>
-              <p className="font-bold text-lg text-center md:text-left">
-                홍길동님
-              </p>
-              <p className="text-sm text-gray-600 text-center md:text-left">
-                아이디(기본) or 이메일
-              </p>
-            </div>
-          </div>
+          {/* 프로필 섹션 */}
+          <Profile name="홍길동님" emailOrId="아이디(기본) or 이메일" />
+          {/* 버튼 섹션 */}
           <div className="flex flex-row md:flex-col gap-2 items-center md:items-end justify-center w-full md:w-auto">
-            <button
-              type="button"
+            <InfoButton
+              label="닉네임 변경"
               onClick={() => setModal('setNickName')}
-              className="text-white bg-[#4F772D] w-[8rem] py-3 rounded hover:bg-[#3b5e23] text-center">
-              닉네임 변경
-            </button>
-            <button
-              type="button"
-              className="text-white bg-[#4F772D] w-[8rem] py-3 rounded hover:bg-[#3b5e23] text-center">
-              회원 탈퇴
-            </button>
+            />
+            <InfoButton
+              label="회원 탈퇴"
+              onClick={() => alert('정말 탈퇴하시겠습니까?')}
+            />
           </div>
         </div>
       </div>
