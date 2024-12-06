@@ -45,7 +45,7 @@ function App() {
           <Route path="/NewBook" element={<NewBook />} />
           <Route path="/EditorChoice/:categoryId" element={<EditorChoice />} />
           <Route path="/Search" element={<Search />} />
-          <Route path="/MyPage" element={<MyPage />} />
+          <Route path="/MyPage" element={<MyPage setModal={setModal} />} />
           <Route path="/MyPage/WishList" element={<WishList />} />
           <Route path="/BookDetail/:itemId" element={<BookDetail />} />
         </Routes>
