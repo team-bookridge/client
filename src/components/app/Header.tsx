@@ -1,13 +1,16 @@
 import logoIcon from '@/assets/logo-icon.png';
 import { Link } from 'react-router-dom';
-import type { Dispatch, SetStateAction } from 'react';
-import { TModal } from '@/types';
 
-interface Props {
-  setModal: Dispatch<SetStateAction<TModal>>;
-}
+import { signInWithProvider } from '@/supabase';
+import useModalStore from '@/stores/modalStore';
+import useAuthStore from '@/stores/authStore';
+import { useState } from 'react';
+import UserMenu from '@components/UserMenu';
 
-function Header({ setModal }: Props) {
+function Header() {
+  const [isActiveUserMenu, setIsActiveUserMenu] = useState<boolean>(false);
+  const { setModal } = useModalStore((state) => state);
+  const { profile: user } = useAuthStore((state) => state);
   return (
     <div
       className="fixed top-0 flex flex-col max-w-[64rem] w-full px-[1.25rem] 
@@ -52,16 +55,32 @@ function Header({ setModal }: Props) {
             }}>
             🔍︎
           </button>
-          {/* 로그인한 상태가 아니라면 로그인 버튼이 보이고 로그인한 상태라면 유저이름을 담은 버튼이 보이게.. */}
-          <button
-            type="button"
-            onClick={() => {
-              setModal('login');
-            }}>
-            로그인
-          </button>
+          {user ? (
+            <button
+              type="button"
+              onClick={() => {
+                setIsActiveUserMenu(!isActiveUserMenu);
+              }}>
+              <img
+                className="w-[1.875rem] h-[1.875rem] rounded-full"
+                src={user.avatar_url}
+                alt="유저 이미지"
+              />
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={() => {
+                signInWithProvider('kakao');
+              }}>
+              로그인
+            </button>
+          )}
         </div>
       </div>
+      {isActiveUserMenu && (
+        <UserMenu setIsActiveUserMenu={setIsActiveUserMenu} />
+      )}
     </div>
   );
 }
