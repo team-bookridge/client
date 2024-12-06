@@ -1,6 +1,5 @@
 import '@/App.css';
 import { TModal } from '@/types';
-import Footer from '@components/app/Footer';
 import Header from '@components/app/Header';
 import HeaderMenuModal from '@components/modal/HeaderMenuModal';
 import LoginModal from '@components/modal/LoginModal';
@@ -16,6 +15,8 @@ import Search from '@pages/Search';
 import WishList from '@pages/WishList';
 import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import topIcon from '@/assets/top-icon.png';
+import scrollToTop from '@/utils/scrollToTop';
 
 function App() {
   const [modal, setModal] = useState<TModal>('');
@@ -25,6 +26,7 @@ function App() {
   } else {
     document.body.style.overflowY = 'auto';
   }
+
   return (
     <>
       {modal && (
@@ -41,19 +43,24 @@ function App() {
         </div>
       )}
       <Header setModal={setModal} />
-      <div className="flex flex-col w-[64rem] gap-6 px-[1.25rem] pt-[5rem]">
+      <div className="flex flex-col w-full h-full max-w-[64rem] px-[1.25rem] pt-[3rem]">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/BestSeller" element={<BestSeller />} />
           <Route path="/NewBook" element={<NewBook />} />
-          <Route path="/EditorChoice" element={<EditorChoice />} />
+          <Route path="/EditorChoice/:categoryId" element={<EditorChoice />} />
           <Route path="/Search" element={<Search />} />
           <Route path="/MyPage" element={<MyPage />} />
           <Route path="/MyPage/WishList" element={<WishList />} />
           <Route path="/BookDetail/:itemId" element={<BookDetail />} />
         </Routes>
-        <Footer />
       </div>
+      <button
+        className="fixed w-[3rem] bottom-[1rem] right-[1rem] z-10 opacity-30"
+        type="button"
+        onClick={scrollToTop}>
+        <img src={topIcon} alt="탑" />
+      </button>
     </>
   );
 }
