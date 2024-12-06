@@ -43,11 +43,7 @@ function App() {
         </div>
       )}
       <Header setModal={setModal} />
-<<<<<<< HEAD
       <div className="flex flex-col w-[100%] max-w-[64rem] gap-6 px-[1.25rem] pt-[5rem]">
-=======
-      <div className="flex flex-col w-full h-full max-w-[64rem] px-[1.25rem] pt-[3rem]">
->>>>>>> 5bad308e3dc6e12724eb039b1f36c3be8ceca761
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/BestSeller" element={<BestSeller />} />
