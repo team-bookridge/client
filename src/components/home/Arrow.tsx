@@ -1,19 +1,16 @@
-// Arrow 화살표 컴포넌트 따로 관리
-import React from 'react';
-
 interface ArrowProps {
   className?: string;
   style?: React.CSSProperties;
   onClick?: () => void;
 }
 
-const Arrow: React.FC<ArrowProps> = ({ className, style, onClick }) => {
+const Arrow = ({ className, onClick }: ArrowProps) => {
+  // 필요없는 style 제거 및 onClick 제거시 버튼 클릭이안됨 onClick은 필수
   const isPrev = className?.includes('slick-prev');
   return (
     <div
       className={className}
       style={{
-        ...style,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',

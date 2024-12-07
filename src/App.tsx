@@ -37,13 +37,8 @@ function App() {
           {modal === 'search' && <SearchModal />}
         </div>
       )}
-<<<<<<< HEAD
-      <Header setModal={setModal} />
-      <div className="flex flex-col w-[100%] max-w-[64rem] gap-6 px-[1.25rem] pt-[5rem]">
-=======
       <Header />
       <div className="flex flex-col w-full h-full max-w-[64rem] px-[1.25rem] pt-[3rem]">
->>>>>>> 9d1737f71c509867b92489518b0866417f244b77
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/BestSeller" element={<BestSeller />} />
