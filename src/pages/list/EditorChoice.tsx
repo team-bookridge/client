@@ -32,7 +32,6 @@ function EditorChoice() {
     if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView]);
 
   return (

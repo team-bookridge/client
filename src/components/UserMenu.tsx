@@ -30,7 +30,6 @@ function UserMenu({ setIsActiveUserMenu }: Porps) {
           type="button"
           onClick={() => {
             signOut();
-            setIsActiveUserMenu(false);
           }}>
           로그아웃
         </button>
