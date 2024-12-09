@@ -17,9 +17,18 @@ import topIcon from '@/assets/top-icon.png';
 import scrollToTop from '@/utils/scrollToTop';
 import useModalStore from '@/stores/modalStore';
 import useLoginStateManagement from '@/hooks/useLoginStateManagement';
+import { useEffect } from 'react';
 
 function App() {
   const { modal, setModal } = useModalStore((state) => state);
+
+  useEffect(() => {
+    if (!modal) {
+      document.body.style.overflow = 'unset';
+    } else {
+      document.body.style.overflow = 'hidden';
+    }
+  }, [modal]);
 
   useLoginStateManagement();
   return (
@@ -45,7 +54,7 @@ function App() {
           <Route path="/NewBook" element={<NewBook />} />
           <Route path="/EditorChoice/:categoryId" element={<EditorChoice />} />
           <Route path="/Search" element={<Search />} />
-          <Route path="/MyPage" element={<MyPage setModal={setModal} />} />
+          <Route path="/MyPage" element={<MyPage />} />
           <Route path="/MyPage/WishList" element={<WishList />} />
           <Route path="/BookDetail/:itemId" element={<BookDetail />} />
         </Routes>
