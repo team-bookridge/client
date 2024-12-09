@@ -1,4 +1,5 @@
 import useModalStore from '@/stores/modalStore';
+import { signInWithProvider } from '@/supabase';
 
 export default function LoginModal() {
   const { setModal } = useModalStore();
@@ -25,7 +26,9 @@ export default function LoginModal() {
           {/* 카카오 로그인 버튼 */}
           <button
             type="button"
-            onClick={() => alert('카카오로 로그인')}
+            onClick={() => {
+              signInWithProvider('kakao');
+            }}
             className="w-[300px] h-[50px] rounded-lg overflow-hidden">
             <img
               src="/src/assets/kakao.png"
@@ -37,7 +40,9 @@ export default function LoginModal() {
           {/* 구글 로그인 버튼 */}
           <button
             type="button"
-            onClick={() => alert('구글로 로그인')}
+            onClick={() => {
+              signInWithProvider('google');
+            }}
             className="w-[300px] h-[50px] rounded-lg overflow-hidden border border-grey">
             <img
               src="/src/assets/google.png"
