@@ -73,19 +73,23 @@ function BookDetail(): JSX.Element {
   return (
     <div className="h-full p-4 sm:p-6">
       <div className="flex flex-col sm:flex-row border-b pb-4 bg-white rounded-lg shadow-md p-4">
-        <div className="sm:w-1/4 w-full mb-4 sm:mb-0">
-          <div className="relative w-full pt-[150%] bg-gray-300 rounded-lg overflow-hidden">
+        {/* 이미지 섹션 */}
+        <div className="w-full sm:w-[200px] sm:h-[300px] mb-4 sm:mb-0">
+          <div className="relative w-full h-[300px] sm:h-[300px] bg-white rounded-lg overflow-hidden">
             {cover ? (
               <img
                 src={cover}
                 alt={title}
-                className="absolute top-0 left-0 flex items-center justify-center w-full h-full"
+                className="absolute top-0 left-0 w-full h-full object-contain"
               />
             ) : (
-              <span>No Cover Available</span>
+              <span className="text-center text-gray-500">
+                No Cover Available
+              </span>
             )}
           </div>
         </div>
+        {/* 텍스트 섹션 */}
         <div className="sm:ml-6 flex-1">
           <div className="flex items-center justify-between mb-4">
             <h1 className="text-lg sm:text-xl font-bold">{title}</h1>
