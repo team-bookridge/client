@@ -29,10 +29,7 @@ function UserMenu({ setIsActiveUserMenu }: Porps) {
           className="hover:bg-slate-100 text-[1.125rem] font-[400]"
           type="button"
           onClick={() => {
-            if (profile) {
-              signOut();
-              setIsActiveUserMenu(false);
-            }
+            signOut();
           }}>
           로그아웃
         </button>
