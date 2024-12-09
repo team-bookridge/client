@@ -9,7 +9,6 @@ function useResetCashe(queryKey: string) {
   useEffect(() => {
     if (navigateType === 'PUSH')
       queryClient.removeQueries({ queryKey: [queryKey] });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryKey]);
 }
 
