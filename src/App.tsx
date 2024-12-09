@@ -1,4 +1,9 @@
-import '@/App.css';
+import '@/styles/App.css';
+import '@/styles/responsive.css';
+import '@/styles/simpleslider.css';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+
 import Header from '@components/app/Header';
 import HeaderMenuModal from '@components/modal/HeaderMenuModal';
 import LoginModal from '@components/modal/LoginModal';

@@ -61,19 +61,11 @@
 }
 
 .simple-slider-dots li button {
-  background: rgba(
-    100,
-    150,
-    80,
-    0.5
-  ); /* 비활성화된 점의 배경색 (녹색 계열 반투명) */
   border-radius: 50%; /* 점을 원형으로 설정 */
   width: 4px; /* 점의 너비 */
   height: 4px; /* 점의 높이 */
   border: none; /* 점의 테두리 제거 */
-  transition:
-    background 0.3s ease,
-    transform 0.3s ease; /* 점 색상과 크기의 전환 효과 */
+  transition: transform 0.3s ease; /* 점 색상과 크기의 전환 효과 */
 }
 
 /* 활성화된 점 스타일 */
