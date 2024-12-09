@@ -1,84 +1,99 @@
-import { useEffect, useState } from 'react';
-
-interface Book {
-  id: number;
-  title: string;
-  author: string;
-}
+import { useState } from 'react';
+import useAuthStore from '@/stores/authStore';
+import { deleteSelectedWishItems } from '@/supabase';
+import Title from '@/components/common/Title';
 
 function WishList(): JSX.Element {
-  const [books, setBooks] = useState<Book[]>([]); // 초기 상태를 빈 배열로 설정
-  const [selectAll, setSelectAll] = useState<boolean>(false);
-  const [selectedBooks, setSelectedBooks] = useState<Set<number>>(new Set());
+  const { profile, wishList, removeWishItem } = useAuthStore();
+  const [selectedBooks, setSelectedBooks] = useState<string[]>([]);
 
-  useEffect(() => {
-    // 컴포넌트가 마운트될 때 localStorage에서 찜 목록 불러오기
-    const storedWishList = JSON.parse(localStorage.getItem('wishList') || '[]');
-    setBooks(storedWishList);
-  }, []);
+  const handleSelect = (contentId: string) => {
+    setSelectedBooks((prev) =>
+      prev.includes(contentId)
+        ? prev.filter((id) => id !== contentId)
+        : [...prev, contentId]
+    );
+  };
 
   const handleSelectAll = () => {
-    if (selectAll) {
-      setSelectedBooks(new Set());
+    if (selectedBooks.length === wishList.length) {
+      setSelectedBooks([]);
     } else {
-      const allIds = books.map((book) => book.id);
-      setSelectedBooks(new Set(allIds));
+      setSelectedBooks(wishList.map((book) => book.contentId));
     }
-    setSelectAll(!selectAll);
   };
 
-  const handleSelect = (id: number) => {
-    const updatedSelection = new Set(selectedBooks);
-    if (updatedSelection.has(id)) {
-      updatedSelection.delete(id);
-    } else {
-      updatedSelection.add(id);
+  const handleDeleteSelected = async () => {
+    if (!profile) {
+      alert('로그인이 필요합니다.');
+      return;
     }
-    setSelectedBooks(updatedSelection);
-    setSelectAll(updatedSelection.size === books.length);
-  };
 
-  const handleDelete = () => {
-    const remainingBooks = books.filter((book) => !selectedBooks.has(book.id));
-    setBooks(remainingBooks);
-    setSelectedBooks(new Set());
-    setSelectAll(false);
+    const success = await deleteSelectedWishItems(
+      profile.id,
+      selectedBooks.map((contentId) => Number(contentId))
+    );
 
-    // 변경된 찜 목록을 localStorage에 저장
-    localStorage.setItem('wishList', JSON.stringify(remainingBooks));
+    if (success) {
+      selectedBooks.forEach((contentId) => removeWishItem(contentId));
+      setSelectedBooks([]);
+      alert('선택한 항목이 삭제되었습니다.');
+    } else {
+      alert('삭제에 실패했습니다. 다시 시도해주세요.');
+    }
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen p-4">
-      <h2 className="text-xl font-bold border-b pb-2 mb-4">찜 목록</h2>
-      <div className="flex items-center gap-2 mb-4">
-        <input type="checkbox" checked={selectAll} onChange={handleSelectAll} />
-        <span className="text-sm">찜한 도서</span>
-        <button
-          type="button"
-          onClick={handleDelete}
-          className="ml-auto bg-gray-400 text-white px-4 py-2 rounded">
-          삭제
-        </button>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {books.map((book) => (
-          <div
-            key={book.id}
-            className="border rounded-lg p-4 bg-gray-200 flex items-start gap-2">
-            <input
-              type="checkbox"
-              checked={selectedBooks.has(book.id)}
-              onChange={() => handleSelect(book.id)}
-              className="mt-1"
-            />
-            <div className="flex-shrink-0 w-16 h-24 bg-gray-300" />
-            <div>
-              <p className="font-bold">{book.title}</p>
-              <p className="text-sm text-gray-600">{book.author}</p>
+    <div className="w-full flex justify-center">
+      <div className="w-full min-h-[950px] max-w-[64rem]">
+        {/* 헤더 */}
+        <Title text="찜 목록" />
+        {/* 전체 선택 및 삭제 버튼 */}
+        <div className="flex items-center pt-6 pb-4 mb-[1rem] w-full">
+          <input
+            type="checkbox"
+            checked={
+              selectedBooks.length === wishList.length && wishList.length > 0
+            }
+            onChange={handleSelectAll}
+            className="w-5 h-5 border-2 border-[#4F772D] rounded-lg accent-[#4F772D]"
+          />
+          <span className="ml-[1rem] text-[1rem]">찜한 도서</span>
+          <button
+            type="button"
+            onClick={handleDeleteSelected}
+            className="ml-auto bg-[#4F772D] text-white px-[1rem] py-[0.5rem] rounded">
+            삭제
+          </button>
+        </div>
+        {/* 책 리스트 */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-[1.5rem] w-full">
+          {wishList.map((book) => (
+            <div
+              key={book.contentId}
+              className="border-[1px] border-[#4F772D] rounded-lg p-[1rem] bg-[#F1F8E9] flex items-start gap-[0.5rem]">
+              <input
+                type="checkbox"
+                checked={selectedBooks.includes(book.contentId)}
+                onChange={() => handleSelect(book.contentId)}
+                className="min-w-5 min-h-5 border-2 border-[#4F772D] rounded-lg accent-[#4F772D]"
+              />
+              <div className="flex-shrink-0 w-[4rem] h-[6rem] bg-gray-300">
+                <img
+                  src={book.contentImg}
+                  alt={book.contentTitle}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="flex-grow">
+                <p className="font-bold text-[1rem]">{book.contentTitle}</p>
+                <p className="text-[0.875rem] text-gray-600">
+                  {book.contentAuthor}
+                </p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
