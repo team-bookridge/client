@@ -1,6 +1,9 @@
 import Slider, { Settings } from 'react-slick';
 import { TResponseBookItemInfo } from '@/types';
 import { Link } from 'react-router-dom';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import '@/styles/responsive.css';
 import ResponsiveArrow from '@components/home/ResponsiveArrow';
 
 // 반응형 슬라이더 컴포넌트
