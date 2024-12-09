@@ -67,7 +67,7 @@ function WishList(): JSX.Element {
           </button>
         </div>
         {/* 책 리스트 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-[1.5rem] w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-[1.5rem]">
           {wishList.map((book) => (
             <div
               key={book.contentId}
