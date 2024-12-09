@@ -1,10 +1,10 @@
-interface ArrowProps {
+interface Props {
   className: string;
 
   onClick: () => void;
 }
 
-function Arrow({ className, onClick }: ArrowProps) {
+function ResponsiveArrow({ className, onClick }: Props) {
   // 필요없는 style 제거 및 onClick 제거시 버튼 클릭이안됨 onClick은 필수
   const isPrev = className?.includes('slick-prev');
   return (
@@ -70,4 +70,4 @@ function Arrow({ className, onClick }: ArrowProps) {
   );
 }
 
-export default Arrow;
+export default ResponsiveArrow;
