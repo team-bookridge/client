@@ -1,5 +1,8 @@
 import Slider from 'react-slick';
 import SimpleSilderArrow from '@components/home/SimpleSilderArrow';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import '@/styles/simpleslider.css';
 
 // 슬라이더 컴포넌트 정의
 function SimpleSlider() {
