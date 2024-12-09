@@ -1,9 +1,9 @@
 function SetNickNameModal() {
   return (
-    <div className="fixed inset-0 bg-black/50 z-50 flex justify-center items-center">
-      <div className="bg-white rounded-lg w-[90%] max-w-[25rem] p-6 shadow-lg relative">
-        닉네임 변경
-      </div>
+    <div
+      className="self-center flex justify-center items-center
+     w-[50%] h-[50%] bg-white rounded-md z-30 opacity-100">
+      <div className="text-[3rem]">SetNickNameModal</div>
     </div>
   );
 }

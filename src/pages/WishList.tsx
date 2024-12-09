@@ -76,7 +76,7 @@ function WishList(): JSX.Element {
                 type="checkbox"
                 checked={selectedBooks.includes(book.contentId)}
                 onChange={() => handleSelect(book.contentId)}
-                className="w-5 h-5 border-2 border-[#4F772D] rounded-lg accent-[#4F772D]"
+                className="min-w-5 min-h-5 border-2 border-[#4F772D] rounded-lg accent-[#4F772D]"
               />
               <div className="flex-shrink-0 w-[4rem] h-[6rem] bg-gray-300">
                 <img
