@@ -2,12 +2,13 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { TResponseBookItemInfo } from '@/types';
 import useGetListData from '@/hooks/list/useGetListData';
-import CategoryH from '@/components/home/CategoryH';
-import SimpleSlider from '../components/home/SimpleSlider';
+import CategoryH from '@components/home/CategoryH';
 import Responsive from '@components/home/Responsive';
-import HomeTitle from '@components/home/HomeTitle'; // HomeTitle 제목을 나타내는 컴포넌트 추가
+import Title from '@components/common/Title';
+import SimpleSlider from '@/components/home/SimpleSlider';
+import Footer from '@components/app/Footer';
 
-const Home = () => {
+function Home() {
   // 데이터 가져오기
   const { data: bestSellerData, isLoading: isBestSellerLoading } =
     useGetListData('SlickBestSeller', 'Bestseller');
@@ -42,47 +43,45 @@ const Home = () => {
   return (
     <>
       <SimpleSlider />
-      <HomeTitle text="베스트 셀러" />
+      <Title text="베스트 셀러" />
       {renderResponsive({
         item: bestSellerData?.item,
         isLoading: isBestSellerLoading,
       })}
-
-      <HomeTitle text="주목할 만한 신간" />
+      <Title text="주목할 만한 신간" />
       {renderResponsive({
         item: newBookData?.item,
         isLoading: isNewBookLoading,
       })}
-
-      <HomeTitle text="편집자 추천" />
+      <Title text="편집자 추천" />
       <CategoryH
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
       />
-
-      <div className="flex flex-wrap">
+      <div className="flex flex-wrap min-h-[46.875rem]">
         {!isEditorChoiceLoading &&
           editorChoiceData?.item?.map((el: TResponseBookItemInfo) => (
             <div
-              className="md:w-[25%] w-[33%] w-[50%] h-[250px] flex flex-col justify-center items-center gap-[0.25rem]"
+              className="md:w-[25%] w590px:w-[33%] w-[50%] h-[15.625rem] flex flex-col justify-center items-center gap-[0.25rem]"
               key={el.itemId}>
               <Link to={`/BookDetail/${el.itemId}`}>
                 <img
-                  className="w-[144px] h-[210px]"
+                  className="w-[9rem] h-[13.125rem]"
                   src={el.cover}
                   alt={el.title}
                 />
               </Link>
               <Link
-                className="w-[144px] hover:underline text-start line-clamp-1 font-[900]"
+                className="w-[9rem] hover:underline text-start line-clamp-1 font-[900]"
                 to={`/BookDetail/${el.itemId}`}>
                 {el.title}
               </Link>
             </div>
           ))}
       </div>
+      <Footer />
     </>
   );
-};
+}
 
 export default Home;
