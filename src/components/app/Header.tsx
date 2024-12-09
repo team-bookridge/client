@@ -10,7 +10,7 @@ import UserMenu from '@components/UserMenu';
 function Header() {
   const [isActiveUserMenu, setIsActiveUserMenu] = useState<boolean>(false);
   const { setModal } = useModalStore((state) => state);
-  const { profile: user } = useAuthStore((state) => state);
+  const { profile } = useAuthStore((state) => state);
   return (
     <div
       className="fixed top-0 flex flex-col max-w-[64rem] w-full px-[1.25rem] 
@@ -55,7 +55,7 @@ function Header() {
             }}>
             🔍︎
           </button>
-          {user ? (
+          {profile ? (
             <button
               type="button"
               onClick={() => {
@@ -63,18 +63,27 @@ function Header() {
               }}>
               <img
                 className="w-[1.875rem] h-[1.875rem] rounded-full"
-                src={user.avatar_url}
+                src={profile.avatar_url}
                 alt="유저 이미지"
               />
             </button>
           ) : (
-            <button
-              type="button"
-              onClick={() => {
-                signInWithProvider('kakao');
-              }}>
-              로그인
-            </button>
+            <>
+              <button
+                type="button"
+                onClick={() => {
+                  signInWithProvider('kakao');
+                }}>
+                카카오 로그인
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  signInWithProvider('google');
+                }}>
+                구글 로그인
+              </button>
+            </>
           )}
         </div>
       </div>
