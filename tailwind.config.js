@@ -36,7 +36,7 @@ export default {
       },
       screens: {
         w450px: '450px',
-        w519px: '519px',
+        w535px: '535px',
         w590px: '590px',
       },
     },
