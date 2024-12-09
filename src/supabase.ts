@@ -82,7 +82,7 @@ export const addOrDeleteWishItem = async (
 
 export const deleteSelectedWishItems = async (
   userId: string,
-  contentIds: TWishItem[]
+  contentIds: number[]
 ) => {
   if (contentIds.length === 0) {
     return false;
