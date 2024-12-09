@@ -38,7 +38,13 @@ export type TProfile = {
   nickname: string;
   email: string;
   avatar_url: string;
-  created_at: string;
 };
 
 export type TAuthProvider = 'kakao' | 'google';
+
+export type TWishItem = {
+  contentId: string;
+  contentTitle: string;
+  contentAuthor: string;
+  contentImg: string;
+};
