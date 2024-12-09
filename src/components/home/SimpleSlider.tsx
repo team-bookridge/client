@@ -1,29 +1,29 @@
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import '../../simpleslider.css';
+import '@/simpleslider.css';
 
 // 슬라이더의 화살표 버튼 컴포넌트 인터페이스
 interface ArrowProps {
-  className?: string;
-  style?: React.CSSProperties;
-  onClick?: () => void;
+  className: string;
+  onClick: () => void;
 }
 
 // 슬라이더의 화살표 버튼 컴포넌트 정의
-const Arrow = ({ className, onClick }: ArrowProps) => {
+function Arrow({ className, onClick }: ArrowProps) {
   const isPrev = className?.includes('slick-prev');
   return (
     <div
       className={`simple-slider-${isPrev ? 'prev' : 'next'}`}
-      onClick={onClick}>
+      onClick={onClick}
+      aria-hidden>
       {isPrev ? '<' : '>'}
     </div>
   );
-};
+}
 
 // 슬라이더 컴포넌트 정의
-const SimpleSlider = () => {
+function SimpleSlider() {
   // 슬라이더 설정 객체
   const settings = {
     dots: true,
@@ -32,8 +32,8 @@ const SimpleSlider = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     adaptiveHeight: true,
-    prevArrow: <Arrow className="simple-slider-prev" />,
-    nextArrow: <Arrow className="simple-slider-next" />,
+    prevArrow: <Arrow className="simple-slider-prev" onClick={() => {}} />,
+    nextArrow: <Arrow className="simple-slider-next" onClick={() => {}} />,
     responsive: [
       {
         breakpoint: 1024,
@@ -77,7 +77,7 @@ const SimpleSlider = () => {
       </Slider>
     </div>
   );
-};
+}
 
 export default SimpleSlider;
 

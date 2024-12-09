@@ -1,10 +1,10 @@
 interface ArrowProps {
-  className?: string;
-  style?: React.CSSProperties;
-  onClick?: () => void;
+  className: string;
+
+  onClick: () => void;
 }
 
-const Arrow = ({ className, onClick }: ArrowProps) => {
+function Arrow({ className, onClick }: ArrowProps) {
   // 필요없는 style 제거 및 onClick 제거시 버튼 클릭이안됨 onClick은 필수
   const isPrev = className?.includes('slick-prev');
   return (
@@ -21,7 +21,8 @@ const Arrow = ({ className, onClick }: ArrowProps) => {
         zIndex: 1,
         cursor: 'pointer',
       }}
-      onClick={onClick}>
+      onClick={onClick}
+      aria-hidden>
       {isPrev ? (
         // 이전 버튼 아이콘 (SVG)
         <svg
@@ -67,6 +68,6 @@ const Arrow = ({ className, onClick }: ArrowProps) => {
       )}
     </div>
   );
-};
+}
 
 export default Arrow;

@@ -3,7 +3,7 @@ import { TResponseBookItemInfo } from '@/types';
 import { Link } from 'react-router-dom';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import '../../responsive.css';
+import '@/responsive.css';
 import Arrow from './Arrow';
 
 // 반응형 슬라이더 컴포넌트
@@ -11,7 +11,7 @@ interface ResponsiveProps {
   books: TResponseBookItemInfo[];
 }
 
-const Responsive = ({ books }: ResponsiveProps) => {
+function Responsive({ books }: ResponsiveProps) {
   // 슬라이더 설정 객체
   const defaultSettings: Settings = {
     dots: true,
@@ -21,8 +21,8 @@ const Responsive = ({ books }: ResponsiveProps) => {
     slidesToScroll: 4,
     centerMode: true,
     centerPadding: '0px',
-    prevArrow: <Arrow className="slick-prev" style={{}} onClick={() => {}} />,
-    nextArrow: <Arrow className="slick-next" style={{}} onClick={() => {}} />,
+    prevArrow: <Arrow className="slick-prev" onClick={() => {}} />,
+    nextArrow: <Arrow className="slick-next" onClick={() => {}} />,
     arrows: true,
     responsive: [
       {
@@ -85,6 +85,6 @@ const Responsive = ({ books }: ResponsiveProps) => {
       </Slider>
     </div>
   );
-};
+}
 
 export default Responsive;
