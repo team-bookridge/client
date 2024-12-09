@@ -1,4 +1,4 @@
-export type TModal = '' | 'login' | 'setNickName' | 'headerMenu' | 'search';
+export type TModal = null | 'login' | 'setNickName' | 'headerMenu' | 'search';
 
 export type TCategory = {
   id: number;
@@ -32,3 +32,19 @@ export type TResponseBookItemInfo = {
 };
 
 export type TSiteName = '교보문고' | '예스24' | '알라딘';
+
+export type TProfile = {
+  id: string;
+  nickname: string;
+  email: string;
+  avatar_url: string;
+};
+
+export type TAuthProvider = 'kakao' | 'google';
+
+export type TWishItem = {
+  contentId: string;
+  contentTitle: string;
+  contentAuthor: string;
+  contentImg: string;
+};

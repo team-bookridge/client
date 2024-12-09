@@ -1,19 +1,19 @@
-import { useEffect, useState } from 'react';
+import useAccessCheck from '@/hooks/useAccessCheck';
+import useAuthStore from '@/stores/authStore';
+import useModalStore from '@/stores/modalStore';
+import { deleteUserData } from '@/supabase';
+import scrollToTop from '@/utils/scrollToTop';
 import { Link } from 'react-router-dom';
-import type { Dispatch, SetStateAction } from 'react';
-import { TModal } from '@/types';
 
-interface MyPageProps {
-  setModal: Dispatch<SetStateAction<TModal>>;
-}
+function MyPage() {
+  scrollToTop();
 
-function MyPage({ setModal }: MyPageProps): JSX.Element {
-  const [wishListCount, setWishListCount] = useState<number>(0);
+  const { setModal } = useModalStore();
+  const { profile, wishList } = useAuthStore();
 
-  useEffect(() => {
-    const storedWishList = JSON.parse(localStorage.getItem('wishList') || '[]');
-    setWishListCount(storedWishList.length);
-  }, []);
+  const isAllowAccess = useAccessCheck('잘못된 접근입니다!');
+
+  if (!isAllowAccess) return null;
 
   return (
     <div className="flex flex-col items-center min-h-[950px] w-full mx-auto gap-6 px-4 pt-6">
@@ -25,7 +25,11 @@ function MyPage({ setModal }: MyPageProps): JSX.Element {
       <div className="flex flex-col w-full max-w-[40rem] p-6 rounded-lg border border-[#4F772D]">
         <div className="flex flex-col md:flex-row items-center justify-between w-full gap-4">
           <div className="flex items-center gap-4">
-            <div className="w-[6rem] h-[6rem] md:w-[8rem] md:h-[8rem] bg-[#C0CFB2] rounded-full" />
+            <img
+              className="w-[6rem] h-[6rem] md:w-[8rem] md:h-[8rem] rounded-full"
+              src={profile?.avatar_url}
+              alt="유저 프로필 이미지"
+            />
             <div>
               <p className="font-bold text-lg text-center md:text-left">
                 홍길동님
@@ -44,18 +48,20 @@ function MyPage({ setModal }: MyPageProps): JSX.Element {
             </button>
             <button
               type="button"
+              onClick={() => {
+                if (profile) deleteUserData(profile.id);
+              }}
               className="text-white bg-[#4F772D] w-[8rem] py-3 rounded hover:bg-[#3b5e23] text-center">
               회원 탈퇴
             </button>
           </div>
         </div>
       </div>
-      {/* 찜 목록 */}
       <Link
         to="/MyPage/WishList"
         className="w-full max-w-[40rem] border border-[#4F772D] p-4 rounded-lg shadow-sm hover:shadow-md transition flex flex-col items-start">
         <p className="font-bold text-lg text-left">찜 목록</p>
-        <p className="text-sm text-gray-600 text-left">{wishListCount}개</p>
+        <p className="text-sm text-gray-600 text-left">{wishList.length}개</p>
       </Link>
     </div>
   );

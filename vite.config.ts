@@ -9,6 +9,14 @@ export default defineConfig({
       { find: '@components', replacement: '/src/components' },
       { find: '@pages', replacement: '/src/pages' },
       { find: '@', replacement: '/src' },
+      { find: '~slick-carousel', replacement: '/node_modules/slick-carousel' }, // 추가
     ],
+  },
+  css: {
+    preprocessorOptions: {
+      css: {
+        charset: false, // inport swiper 오류 방지
+      },
+    },
   },
 });

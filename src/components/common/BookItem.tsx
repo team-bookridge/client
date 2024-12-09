@@ -1,3 +1,8 @@
+/* eslint-disable no-nested-ternary */
+/* eslint-disable no-alert */
+import useAuthStore from '@/stores/authStore';
+import useModalStore from '@/stores/modalStore';
+import { addOrDeleteWishItem } from '@/supabase';
 import { TResponseBookItemInfo } from '@/types';
 import escapeHTML from '@/utils/escapeHTML';
 import LinkButton from '@components/common/LinkButton';
@@ -8,6 +13,10 @@ interface Props {
 }
 
 function BookItem({ bookInfo }: Props) {
+  const { profile, wishList, addWishItem, removeWishItem } = useAuthStore();
+
+  const { setModal } = useModalStore();
+
   return (
     <div className="flex flex-col gap-[1.5rem] px-[0.5rem] py-[1rem] w-[100%] border-b-2 border-[#C0CFB2]">
       <div className="flex gap-[1rem]">
@@ -21,12 +30,58 @@ function BookItem({ bookInfo }: Props) {
           </Link>
         </div>
         <div className="flex flex-col gap-[0.25rem] flex-grow max-h-[19.5]">
-          <div className="min-h-[3.25rem]">
+          <div className="min-h-[3rem] pb-[0.25rem] flex justify-between gap-[1rem]">
             <Link
-              className="hover:underline text-start line-clamp-2 pb-[0.25rem] font-[900]"
+              className="hover:underline text-start line-clamp-2  font-[900]"
               to={`/BookDetail/${bookInfo.itemId}`}>
               {bookInfo.title}
             </Link>
+            {!profile ? (
+              <button
+                className="min-w-[3rem] min-h-[3rem]"
+                type="button"
+                onClick={() => {
+                  alert('찜 기능은 로그인을 하셔야 합니다!');
+                  setModal('login');
+                }}>
+                찜하기
+              </button>
+            ) : (
+              <button
+                className="min-w-[3rem] min-h-[3rem]"
+                type="button"
+                onClick={() => {
+                  addOrDeleteWishItem(
+                    profile.id,
+                    {
+                      contentId: String(bookInfo.itemId),
+                      contentTitle: bookInfo.title,
+                      contentAuthor: bookInfo.author,
+                      contentImg: bookInfo.cover,
+                    },
+                    wishList
+                  ).then((res) => {
+                    if (res === '추가성공') {
+                      addWishItem({
+                        contentId: String(bookInfo.itemId),
+                        contentTitle: bookInfo.title,
+                        contentAuthor: bookInfo.author,
+                        contentImg: bookInfo.cover,
+                      });
+                    } else if (res === '삭제성공') {
+                      removeWishItem(String(bookInfo.itemId));
+                    } else {
+                      alert('실패하였습니다. 다시 시도해 주세요');
+                    }
+                  });
+                }}>
+                {wishList?.find(
+                  (item) => Number(item.contentId) === bookInfo.itemId
+                ) !== undefined
+                  ? '찜취소'
+                  : '찜하기'}
+              </button>
+            )}
           </div>
           <p className="line-clamp-1 text-gray-700">{bookInfo.author}</p>
           <p className="line-clamp-1 text-gray-700">
@@ -35,11 +90,11 @@ function BookItem({ bookInfo }: Props) {
           <p className="text-gray-700">{bookInfo.pubDate}</p>
           <p className="text-gray-700">{bookInfo.priceStandard}원</p>
           <p className="w-[100%] line-clamp-4 text-gray-700">
-            {bookInfo.description !== '' && escapeHTML(bookInfo.description)}
+            {bookInfo.description && escapeHTML(bookInfo.description)}
           </p>
         </div>
       </div>
-      <div className="w519px:justify-start w519px:ml-[10rem] flex justify-center gap-[1.5rem]">
+      <div className="w535px:justify-start w535px:ml-[10rem] flex justify-center gap-[1.5rem]">
         <LinkButton bookInfo={bookInfo} siteName="알라딘" />
         <LinkButton bookInfo={bookInfo} siteName="교보문고" />
         <LinkButton bookInfo={bookInfo} siteName="예스24" />
