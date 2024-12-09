@@ -1,34 +1,74 @@
 import useAuthStore from '@/stores/authStore';
 import { supabase } from '@/supabase';
+import { TProfile, TWishItem } from '@/types';
 import { useEffect } from 'react';
 
 function useLoginStateManagement() {
-  const { login, logout } = useAuthStore((state) => state);
+  const { expiresAt, setExpiresAt, setUserInfo } = useAuthStore(
+    (state) => state
+  );
+
   useEffect(() => {
     const checkSession = async () => {
-      const { data, error } = await supabase.auth.getSession();
+      const now = Date.now();
+      // 유효기간이 지났다면 세션을 다시 받음
+      if (expiresAt < now) {
+        const { data, error } = await supabase.auth.getSession();
 
-      if (error) return;
+        if (error) return;
 
-      if (data.session) {
-        const { data: profileData, error: profileError } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('id', data.session?.user.id)
-          .single();
+        const session = data?.session;
 
-        if (profileError && profileError.code !== 'PGRST116') return;
+        if (session) {
+          const { data: additionalProfileData, error: additionalProfileError } =
+            await supabase
+              .from('additionalprofiles')
+              .select('nickname')
+              .eq('id', data.session.user.id)
+              .single();
 
-        if (profileData) {
-          login(profileData);
+          if (additionalProfileError) return;
+
+          if (additionalProfileData) {
+            const profiles: TProfile = {
+              id: session.user.id,
+              email: session.user.user_metadata.email,
+              avatar_url: session.user.user_metadata.avatar_url,
+              ...additionalProfileData,
+            };
+
+            const { data: wishListData, error: wishListDataError } =
+              await supabase
+                .from('wishlist')
+                .select(
+                  'content_id, content_title, content_author, content_img'
+                )
+                .order('created_at', { ascending: false })
+                .eq('user_id', data.session.user.id);
+
+            if (wishListDataError && wishListDataError.code !== 'PGRST116') {
+              return;
+            }
+
+            if (wishListData) {
+              const wishlist: TWishItem[] = wishListData.map((item) => {
+                const wishItem: TWishItem = {
+                  contentId: item.content_id,
+                  contentTitle: item.content_title,
+                  contentAuthor: item.content_author,
+                  contentImg: item.content_img,
+                };
+                return wishItem;
+              });
+              setUserInfo(profiles, wishlist);
+              setExpiresAt();
+            }
+          }
         }
-      } else {
-        logout();
       }
     };
 
     checkSession();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 }
 
