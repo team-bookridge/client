@@ -1,5 +1,6 @@
 /* 심플 슬라이더 컨테이너 */
 .simple-slider-container {
+  margin-top: 1rem;
   width: 100%; /* 슬라이더 컨테이너의 너비를 전체로 설정 */
 }
 
@@ -51,7 +52,7 @@
 
 /* dots 스타일 */
 .simple-slider-dots {
-  display: flex; /* 점들을 Flexbox로 정렬 */
+  display: flex;
   justify-content: center; /* 점들을 중앙에 배치 */
   margin-top: 20px; /* 점과 슬라이더 사이 간격 조정 */
 }
@@ -61,10 +62,17 @@
 }
 
 .simple-slider-dots li button {
+  background: rgba(
+    100,
+    150,
+    80,
+    0.5
+  ); /* 비활성화된 점의 배경색 (녹색 계열 반투명) */
   border-radius: 50%; /* 점을 원형으로 설정 */
   width: 4px; /* 점의 너비 */
   height: 4px; /* 점의 높이 */
   border: none; /* 점의 테두리 제거 */
+  transition: background 0.3s ease;
   transition: transform 0.3s ease; /* 점 색상과 크기의 전환 효과 */
 }
 
