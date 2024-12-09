@@ -1,4 +1,4 @@
-import { TAuthProvider } from '@/types';
+import { TAuthProvider, TWishItem } from '@/types';
 import { createClient } from '@supabase/supabase-js';
 
 export const supabase = createClient(
@@ -13,16 +13,20 @@ export const signInWithProvider = async (provider: TAuthProvider) => {
 export const signOut = async () => {
   const { error } = await supabase.auth.signOut();
 
+  localStorage.removeItem('userInfo');
+
   if (!error) window.location.href = '/';
 };
 
 export const setUserNickname = async (userId: string, newNickname: string) => {
   const { error } = await supabase
-    .from('profiles')
+    .from('additionalprofiles')
     .update({ nickname: newNickname })
     .eq('id', userId);
 
-  if (!error) window.location.href = '/Mypage';
+  if (error) return false;
+
+  return true;
 };
 
 export const deleteUserData = async (userId: string) => {
@@ -36,8 +40,62 @@ export const deleteUserData = async (userId: string) => {
 
   if (deleteUserArror) return;
 
-  const { error: signOutError } = await supabase.auth.signOut();
+  signOut();
+};
 
-  if (signOutError) return;
-  window.location.href = '/';
+export const addOrDeleteWishItem = async (
+  userId: string,
+  wishitem: TWishItem,
+  wishList: TWishItem[]
+) => {
+  const isAdded =
+    wishList.find((item) => item.contentId === wishitem.contentId) !==
+    undefined;
+
+  if (isAdded) {
+    const { error: deleteError } = await supabase
+      .from('wishlist')
+      .delete()
+      .eq('user_id', userId)
+      .eq('content_id', wishitem.contentId);
+
+    if (deleteError) {
+      return '실패';
+    }
+    return '삭제성공';
+  }
+  const { error: insertError } = await supabase.from('wishlist').insert([
+    {
+      user_id: userId,
+      content_id: wishitem.contentId,
+      content_title: wishitem.contentTitle,
+      content_author: wishitem.contentAuthor,
+      content_img: wishitem.contentImg,
+    },
+  ]);
+
+  if (insertError) {
+    return '실패';
+  }
+  return '추가성공';
+};
+
+export const deleteSelectedWishItems = async (
+  userId: string,
+  contentIds: TWishItem[]
+) => {
+  if (contentIds.length === 0) {
+    return false;
+  }
+
+  const { error } = await supabase
+    .from('wishlist')
+    .delete()
+    .eq('user_id', userId)
+    .in('content_id', contentIds);
+
+  if (error) {
+    return false;
+  }
+  return true;
 };
