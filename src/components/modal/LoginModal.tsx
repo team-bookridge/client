@@ -1,12 +1,12 @@
-type LoginModalProps = {
-  onClose: () => void;
-};
+import useModalStore from '@/stores/modalStore';
 
-export default function LoginModal({ onClose }: LoginModalProps) {
+export default function LoginModal() {
+  const { setModal } = useModalStore();
+
   return (
     <div
       className="fixed inset-0 bg-black/50 z-50 flex justify-center items-center"
-      onClick={onClose}
+      onClick={() => setModal(null)}
       aria-hidden="true">
       <div
         className="bg-white rounded-lg w-[90%] max-w-[25rem] p-6 shadow-lg relative"
