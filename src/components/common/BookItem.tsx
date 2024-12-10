@@ -18,7 +18,7 @@ function BookItem({ bookInfo }: Props) {
   const { setModal } = useModalStore();
 
   return (
-    <div className="flex flex-col gap-[1.5rem] px-[0.5rem] py-[1rem] w-[100%] border-b-2 border-[#C0CFB2]">
+    <div className="flex flex-col gap-[1.5rem] px-[0.5rem] py-[1rem] w-[100%] mt-6 bg-white rounded-lg shadow-md p-4">
       <div className="flex gap-[1rem]">
         <div className="min-w-[9rem] max-w-[9rem]">
           <Link to={`/BookDetail/${bookInfo.itemId}`}>
@@ -30,25 +30,31 @@ function BookItem({ bookInfo }: Props) {
           </Link>
         </div>
         <div className="flex flex-col gap-[0.25rem] flex-grow max-h-[19.5]">
-          <div className="min-h-[3rem] pb-[0.25rem] flex justify-between gap-[1rem]">
+          <div className="min-h-[3rem] pb-[0.25rem] flex justify-between">
             <Link
-              className="hover:underline text-start line-clamp-2  font-[900]"
+              className="hover:underline text-start line-clamp-2 font-[900]"
               to={`/BookDetail/${bookInfo.itemId}`}>
               {bookInfo.title}
             </Link>
             {!profile ? (
               <button
-                className="min-w-[3rem] min-h-[3rem]"
+                className="hover:text-pink-500 text-gray-400 text-[2rem] min-w-[3rem] min-h-[3rem]"
                 type="button"
                 onClick={() => {
                   alert('찜 기능은 로그인을 하셔야 합니다!');
                   setModal('login');
                 }}>
-                찜하기
+                ♥
               </button>
             ) : (
               <button
-                className="min-w-[3rem] min-h-[3rem]"
+                className={`hover:text-pink-500 text-[2rem] min-w-[3rem] min-h-[3rem] ${
+                  wishList?.find(
+                    (item) => Number(item.contentId) === bookInfo.itemId
+                  ) === undefined
+                    ? 'text-gray-400'
+                    : 'text-pink-500'
+                }`}
                 type="button"
                 onClick={() => {
                   addOrDeleteWishItem(
@@ -75,11 +81,7 @@ function BookItem({ bookInfo }: Props) {
                     }
                   });
                 }}>
-                {wishList?.find(
-                  (item) => Number(item.contentId) === bookInfo.itemId
-                ) !== undefined
-                  ? '찜취소'
-                  : '찜하기'}
+                ♥
               </button>
             )}
           </div>
@@ -89,7 +91,7 @@ function BookItem({ bookInfo }: Props) {
           </p>
           <p className="text-gray-700">{bookInfo.pubDate}</p>
           <p className="text-gray-700">{bookInfo.priceStandard}원</p>
-          <p className="w-[100%] line-clamp-4 text-gray-700">
+          <p className="md:-webkit-box hidden w-[100%] md:line-clamp-3 max-h-[4.5rem] text-gray-700">
             {bookInfo.description && escapeHTML(bookInfo.description)}
           </p>
         </div>
