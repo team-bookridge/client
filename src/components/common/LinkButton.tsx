@@ -9,7 +9,7 @@ interface Props {
 function LinkButton({ bookInfo, siteName }: Props) {
   return (
     <button
-      className="hover:bg-[#45624E] bg-[#C0CFB2] text-[1.125rem] text-[white] font-[900] rounded-[0.25rem] px-[0.75rem] py-[0.25rem]"
+      className="hover:bg-[#45624E] bg-[#C0CFB2] min-w-[5.5rem] text-[1.125rem] text-[white] font-[900] rounded-[0.25rem] px-[0.25rem] py-[0.25rem]"
       type="button"
       onClick={() => {
         if (siteName === '교보문고') {

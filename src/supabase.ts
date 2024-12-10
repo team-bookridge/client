@@ -7,7 +7,12 @@ export const supabase = createClient(
 );
 
 export const signInWithProvider = async (provider: TAuthProvider) => {
-  await supabase.auth.signInWithOAuth({ provider });
+  await supabase.auth.signInWithOAuth({
+    provider,
+    options: {
+      redirectTo: window.location.href,
+    },
+  });
 };
 
 export const signOut = async () => {

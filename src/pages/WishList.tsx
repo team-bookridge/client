@@ -2,10 +2,16 @@ import { useState } from 'react';
 import useAuthStore from '@/stores/authStore';
 import { deleteSelectedWishItems } from '@/supabase';
 import Title from '@/components/common/Title';
+import useAccessCheck from '@/hooks/useAccessCheck';
 
-function WishList(): JSX.Element {
-  const { profile, wishList, removeWishItem } = useAuthStore();
+function WishList() {
+  const { profile, wishList, removeSelectWishItems } = useAuthStore();
+
   const [selectedBooks, setSelectedBooks] = useState<string[]>([]);
+
+  const isAllowAccess = useAccessCheck('잘못된 접근입니다!');
+
+  if (!isAllowAccess) return null;
 
   const handleSelect = (contentId: string) => {
     setSelectedBooks((prev) =>
@@ -23,50 +29,49 @@ function WishList(): JSX.Element {
     }
   };
 
-  const handleDeleteSelected = async () => {
+  const handleDeleteSelected = () => {
     if (!profile) {
       alert('로그인이 필요합니다.');
       return;
     }
 
-    const success = await deleteSelectedWishItems(
+    deleteSelectedWishItems(
       profile.id,
       selectedBooks.map((contentId) => Number(contentId))
-    );
-
-    if (success) {
-      selectedBooks.forEach((contentId) => removeWishItem(contentId));
-      setSelectedBooks([]);
-      alert('선택한 항목이 삭제되었습니다.');
-    } else {
-      alert('삭제에 실패했습니다. 다시 시도해주세요.');
-    }
+    ).then((isSuccess) => {
+      if (isSuccess) {
+        removeSelectWishItems(selectedBooks);
+        setSelectedBooks([]);
+        alert('선택한 항목이 삭제되었습니다.');
+      } else {
+        alert('삭제에 실패했습니다. 다시 시도해주세요.');
+      }
+    });
   };
 
   return (
     <div className="w-full flex justify-center">
       <div className="w-full min-h-[950px] max-w-[64rem]">
-        {/* 헤더 */}
         <Title text="찜 목록" />
-        {/* 전체 선택 및 삭제 버튼 */}
-        <div className="flex items-center pt-6 pb-4 mb-[1rem] w-full">
-          <input
-            type="checkbox"
-            checked={
-              selectedBooks.length === wishList.length && wishList.length > 0
-            }
-            onChange={handleSelectAll}
-            className="w-5 h-5 border-2 border-[#4F772D] rounded-lg accent-[#4F772D]"
-          />
-          <span className="ml-[1rem] text-[1rem]">찜한 도서</span>
+        <div className="flex justify-between items-center py-6 px-4 w-full">
+          <div className="flex items-center gap-[1rem]">
+            <input
+              type="checkbox"
+              checked={
+                selectedBooks.length === wishList.length && wishList.length > 0
+              }
+              onChange={handleSelectAll}
+              className="w-5 h-5 border-2 border-[#4F772D] rounded-lg accent-[#4F772D]"
+            />
+            <span className="text-[1rem]">찜한 도서</span>
+          </div>
           <button
             type="button"
             onClick={handleDeleteSelected}
-            className="ml-auto bg-[#4F772D] text-white px-[1rem] py-[0.5rem] rounded">
+            className="bg-[#4F772D] text-white px-[1rem] py-[0.5rem] rounded">
             삭제
           </button>
         </div>
-        {/* 책 리스트 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-[1.5rem] w-full">
           {wishList.map((book) => (
             <div
