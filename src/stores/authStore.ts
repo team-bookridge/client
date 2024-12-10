@@ -12,6 +12,7 @@ interface AuthState {
   setNickname: (newNickname: string) => void;
   addWishItem: (wishItem: TWishItem) => void;
   removeWishItem: (contentId: string) => void;
+  removeSelectWishItems: (contentIds: string[]) => void;
 }
 
 const useAuthStore = create<AuthState>()(
@@ -55,7 +56,18 @@ const useAuthStore = create<AuthState>()(
       removeWishItem: (contentId) => {
         set((state) => ({
           wishList: [
-            ...state.wishList.filter((Item) => Item.contentId !== contentId),
+            ...state.wishList.filter((item) => item.contentId !== contentId),
+          ],
+        }));
+      },
+      removeSelectWishItems: (contentIds) => {
+        const ids = contentIds;
+        set((state) => ({
+          wishList: [
+            ...state.wishList.filter((item) => {
+              const isExist = ids.includes(item.contentId);
+              return !isExist;
+            }),
           ],
         }));
       },
