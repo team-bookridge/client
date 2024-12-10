@@ -13,10 +13,11 @@ const fetchSearchListData = async (
         Query: query,
         QueryType: 'Keyword',
         Start: String(page),
+        MaxResults: maxResults,
         Sort: 'Accuracy',
         SearchTarget: 'Book',
         Cover: 'Big',
-        output: 'JS',
+        Output: 'JS',
         Version: '20131101',
       },
     }
