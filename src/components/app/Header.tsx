@@ -1,7 +1,6 @@
+import searchIcon from '@/assets/search-icon.png';
 import logoIcon from '@/assets/logo-icon.png';
 import { Link } from 'react-router-dom';
-
-import { signInWithProvider } from '@/supabase';
 import useModalStore from '@/stores/modalStore';
 import useAuthStore from '@/stores/authStore';
 import { useState } from 'react';
@@ -53,7 +52,7 @@ function Header() {
             onClick={() => {
               setModal('search');
             }}>
-            🔍︎
+            <img className="w-[1rem]" src={searchIcon} alt="검색 아이콘" />
           </button>
           {profile ? (
             <button
@@ -68,22 +67,14 @@ function Header() {
               />
             </button>
           ) : (
-            <>
-              <button
-                type="button"
-                onClick={() => {
-                  signInWithProvider('kakao');
-                }}>
-                카카오 로그인
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  signInWithProvider('google');
-                }}>
-                구글 로그인
-              </button>
-            </>
+            <button
+              className="font-[900]"
+              type="button"
+              onClick={() => {
+                setModal('login');
+              }}>
+              로그인
+            </button>
           )}
         </div>
       </div>
