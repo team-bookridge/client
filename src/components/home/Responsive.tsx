@@ -24,6 +24,9 @@ function Responsive({ books }: ResponsiveProps) {
     prevArrow: <ResponsiveArrow className="slick-prev" onClick={() => {}} />,
     nextArrow: <ResponsiveArrow className="slick-next" onClick={() => {}} />,
     arrows: true,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    cssEase: 'ease-in-out',
     responsive: [
       {
         breakpoint: 1024,
