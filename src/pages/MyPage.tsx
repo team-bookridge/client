@@ -5,12 +5,13 @@ import { deleteUserData } from '@/supabase';
 import scrollToTop from '@/utils/scrollToTop';
 import { Link } from 'react-router-dom';
 import Title from '@/components/common/Title';
+import Swal from 'sweetalert2';
 
 function MyPage() {
   scrollToTop();
 
   const { setModal } = useModalStore();
-  const { profile, wishList } = useAuthStore();
+  const { profile, wishList, reviewList } = useAuthStore();
 
   const isAllowAccess = useAccessCheck('잘못된 접근입니다!');
 
@@ -61,6 +62,22 @@ function MyPage() {
           <p className="font-bold text-lg text-left">찜 목록</p>
           <p className="text-sm text-gray-600 text-left">{wishList.length}개</p>
         </Link>
+        <div
+          onClick={() => {
+            Swal.fire({
+              icon: 'error',
+              text: '미구현 기능 입니다',
+              showConfirmButton: false,
+              timer: 1000,
+            });
+          }}
+          aria-hidden
+          className="w-full max-w-[40rem] border border-[#4F772D] p-4 rounded-lg shadow-sm hover:shadow-md transition flex flex-col items-start cursor-pointer">
+          <p className="font-bold text-lg text-left">리뷰 목록</p>
+          <p className="text-sm text-gray-600 text-left">
+            {reviewList.length}개
+          </p>
+        </div>
       </div>
     </>
   );

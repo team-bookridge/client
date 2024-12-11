@@ -3,9 +3,9 @@ import SimpleSilderArrow from '@components/home/SimpleSilderArrow';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import '@/styles/simpleslider.css';
-import image1 from './banner1.png';
-import image2 from './banner2.png';
-import image3 from './banner3.png';
+import banner1 from '@/assets/banner1.png';
+import banner2 from '@/assets/banner2.png';
+import banner3 from '@/assets/banner3.png';
 
 // 슬라이더 컴포넌트 정의
 function SimpleSlider() {
@@ -57,13 +57,13 @@ function SimpleSlider() {
     <div className="simple-slider-container">
       <Slider {...settings}>
         <div className="simple-slider-slide">
-          <img src={image1} />
+          <img src={banner1} alt="광고 배너1" />
         </div>
         <div className="simple-slider-slide">
-          <img src={image2} />
+          <img src={banner2} alt="광고 배너2" />
         </div>
         <div className="simple-slider-slide">
-          <img src={image3} />
+          <img src={banner3} alt="광고 배너3" />
         </div>
       </Slider>
     </div>

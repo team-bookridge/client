@@ -1,18 +1,17 @@
 import { useParams } from 'react-router-dom';
-import { useState } from 'react';
 import useGetDetailData from '@/hooks/detail/useGetDetailData';
-import useAuthStore from '@/stores/authStore';
 import LinkButton from '@/components/common/LinkButton';
 import ReviewForm from '@/components/home/ReviewForm';
 import ReviewList from '@/components/home/ReviewList';
+import { useQuery } from '@tanstack/react-query';
+import { addOrDeleteWishItem, getReviewsByContent } from '@/supabase';
+import Swal from 'sweetalert2';
+import useAuthStore from '@/stores/authStore';
+import useModalStore from '@/stores/modalStore';
 
-interface Review {
-  id: string;
-  text: string;
-}
-
-function BookDetail(): JSX.Element {
+function BookDetail() {
   const { itemId } = useParams<{ itemId: string }>();
+
   const validItemId = itemId || '';
 
   const { data, isLoading, error } = useGetDetailData(
@@ -20,46 +19,16 @@ function BookDetail(): JSX.Element {
     validItemId
   );
 
-  const { wishList, addWishItem, removeWishItem } = useAuthStore(); // Zustand 상태 가져오기
-  const [reviews, setReviews] = useState<Review[]>([]);
+  const { data: reviewsData, refetch } = useQuery({
+    queryKey: [`reviews-${itemId}`],
+    queryFn: () => getReviewsByContent(itemId as string),
+    // refetchInterval: 30000, // 서버 비용이 많이 붙을수 있으
+  });
 
-  // 찜 여부 확인
-  const isLiked = wishList.some((item) => item.contentId === validItemId);
-
-  // 찜 상태 토글 함수
-  const toggleLike = () => {
-    if (!itemId) {
-      console.error('Error: itemId is undefined.');
-      return;
-    }
-
-    const book = Array.isArray(data.item) ? data.item[0] : data.item;
-    const { title, author, cover } = book;
-
-    if (isLiked) {
-      removeWishItem(itemId); // 찜 삭제
-    } else {
-      addWishItem({
-        contentId: itemId,
-        contentTitle: title,
-        contentAuthor: author,
-        contentImg: cover,
-      }); // 찜 추가
-    }
-  };
-
-  const handleAddReview = (text: string) => {
-    const newReview: Review = { id: Date.now().toString(), text };
-    setReviews([...reviews, newReview]);
-  };
-
-  const handleDeleteReview = (id: string) => {
-    const updatedReview = reviews.filter((review) => review.id !== id);
-    setReviews(updatedReview);
-  };
+  const { profile, wishList, addWishItem, removeWishItem } = useAuthStore();
+  const { setModal } = useModalStore();
 
   if (!itemId) {
-    console.error('Error: itemId is undefined.');
     return <div>Invalid item ID</div>;
   }
 
@@ -114,15 +83,64 @@ function BookDetail(): JSX.Element {
         <div className="sm:ml-6 flex-1">
           <div className="flex items-center justify-between mb-4">
             <h1 className="text-lg sm:text-xl font-bold">{title}</h1>
-            <button
-              type="button"
-              onClick={toggleLike}
-              className={`text-xl sm:text-2xl ${
-                isLiked ? 'text-pink-500' : 'text-gray-400'
-              }`}
-              aria-label="찜버튼">
-              ♥
-            </button>
+            {!profile ? (
+              <button
+                className="hover:text-pink-500 text-gray-400 text-[2rem] min-w-[3rem] min-h-[3rem]"
+                type="button"
+                onClick={() => {
+                  Swal.fire({
+                    icon: 'info',
+                    text: '해당 서비스는 로그인이 필요합니다!',
+                  }).then(() => {
+                    setModal('login');
+                  });
+                }}>
+                ♥
+              </button>
+            ) : (
+              <button
+                className={`hover:text-pink-500 text-[2rem] min-w-[3rem] min-h-[3rem] ${
+                  wishList?.find(
+                    (item) => Number(item.contentId) === book.itemId
+                  ) === undefined
+                    ? 'text-gray-400'
+                    : 'text-pink-500'
+                }`}
+                type="button"
+                onClick={() => {
+                  addOrDeleteWishItem(
+                    profile.id,
+                    {
+                      contentId: String(book.itemId),
+                      contentTitle: book.title,
+                      contentAuthor: book.author,
+                      contentImg: book.cover,
+                    },
+                    wishList
+                  ).then((res) => {
+                    if (res === '추가성공') {
+                      addWishItem({
+                        contentId: String(book.itemId),
+                        contentTitle: book.title,
+                        contentAuthor: book.author,
+                        contentImg: book.cover,
+                      });
+                    } else if (res === '삭제성공') {
+                      removeWishItem(String(book.itemId));
+                    } else {
+                      Swal.fire({
+                        icon: 'error',
+                        title: '찜추가 실패',
+                        text: '다시 시도해 주세요',
+                        showConfirmButton: false,
+                        timer: 1000,
+                      });
+                    }
+                  });
+                }}>
+                ♥
+              </button>
+            )}
           </div>
           <p className="text-sm sm:text-base text-gray-700">저자 : {author}</p>
           <p className="text-sm sm:text-base text-gray-700">
@@ -146,8 +164,8 @@ function BookDetail(): JSX.Element {
         <h2 className="text-base sm:text-lg font-semibold mb-4">설명</h2>
         <p className="text-sm sm:text-base text-gray-700">{description}</p>
       </div>
-      <ReviewForm onAddReview={handleAddReview} />
-      <ReviewList reviews={reviews} onDeleteReview={handleDeleteReview} />
+      <ReviewForm refetch={refetch} />
+      <ReviewList data={reviewsData} />
     </div>
   );
 }

@@ -48,3 +48,10 @@ export type TWishItem = {
   contentAuthor: string;
   contentImg: string;
 };
+
+export type TReview = {
+  contentId: string;
+  userNickname: string;
+  review: string;
+  updatedAt: string;
+};

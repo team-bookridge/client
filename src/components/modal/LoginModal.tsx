@@ -1,14 +1,8 @@
-import useModalStore from '@/stores/modalStore';
 import { signInWithProvider } from '@/supabase';
 
 export default function LoginModal() {
-  const { setModal } = useModalStore();
-
   return (
-    <div
-      className="fixed inset-0 bg-black/50 z-50 flex justify-center items-center"
-      onClick={() => setModal(null)}
-      aria-hidden="true">
+    <div className="inset-0 flex justify-center items-center">
       <div
         className="bg-white rounded-lg w-[90%] max-w-[25rem] p-6 shadow-lg relative"
         onClick={(e) => {
