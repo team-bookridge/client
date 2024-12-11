@@ -35,7 +35,7 @@ function App() {
     <>
       {modal && (
         <div
-          className="fixed w-full h-full bg-black/50 z-30 grid"
+          className="fixed w-full h-full bg-black/30 z-30 grid"
           onClick={() => {
             setModal(null);
           }}
