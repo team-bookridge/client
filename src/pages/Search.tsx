@@ -14,15 +14,17 @@ function Search() {
   const query = searchParams.get('query') || '';
   const navigate = useNavigate();
 
+  const queryKey = 'searchList';
+
   useEffect(() => {
     queryClient.removeQueries({
-      queryKey: ['search', query],
+      queryKey: [queryKey, query],
     });
     scrollToTop();
   }, [query]);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useInfiniteGetSearchListData('search', query);
+    useInfiniteGetSearchListData(queryKey, query);
 
   const { ref, inView } = useInView();
 
