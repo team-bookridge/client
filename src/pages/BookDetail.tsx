@@ -1,11 +1,13 @@
 import { useParams } from 'react-router-dom';
-import { useState } from 'react';
 import useGetDetailData from '@/hooks/detail/useGetDetailData';
 import LinkButton from '@/components/common/LinkButton';
 import ReviewForm from '@/components/home/ReviewForm';
 import ReviewList from '@/components/home/ReviewList';
 import { useQuery } from '@tanstack/react-query';
-import { getReviewsByContent } from '@/supabase';
+import { addOrDeleteWishItem, getReviewsByContent } from '@/supabase';
+import Swal from 'sweetalert2';
+import useAuthStore from '@/stores/authStore';
+import useModalStore from '@/stores/modalStore';
 
 function BookDetail() {
   const { itemId } = useParams<{ itemId: string }>();
@@ -23,11 +25,8 @@ function BookDetail() {
     // refetchInterval: 30000, // 서버 비용이 많이 붙을수 있으
   });
 
-  const [isLiked, setIsliked] = useState(false);
-
-  const toggleLike = () => {
-    setIsliked(!isLiked);
-  };
+  const { profile, wishList, addWishItem, removeWishItem } = useAuthStore();
+  const { setModal } = useModalStore();
 
   if (!itemId) {
     return <div>Invalid item ID</div>;
@@ -84,15 +83,64 @@ function BookDetail() {
         <div className="sm:ml-6 flex-1">
           <div className="flex items-center justify-between mb-4">
             <h1 className="text-lg sm:text-xl font-bold">{title}</h1>
-            <button
-              type="button"
-              onClick={toggleLike}
-              className={`text-xl sm:text-2xl ${
-                isLiked ? 'text-pink-500' : 'text-gray-400'
-              }`}
-              aria-label="찜버튼">
-              ♥
-            </button>
+            {!profile ? (
+              <button
+                className="hover:text-pink-500 text-gray-400 text-[2rem] min-w-[3rem] min-h-[3rem]"
+                type="button"
+                onClick={() => {
+                  Swal.fire({
+                    icon: 'info',
+                    text: '해당 서비스는 로그인이 필요합니다!',
+                  }).then(() => {
+                    setModal('login');
+                  });
+                }}>
+                ♥
+              </button>
+            ) : (
+              <button
+                className={`hover:text-pink-500 text-[2rem] min-w-[3rem] min-h-[3rem] ${
+                  wishList?.find(
+                    (item) => Number(item.contentId) === book.itemId
+                  ) === undefined
+                    ? 'text-gray-400'
+                    : 'text-pink-500'
+                }`}
+                type="button"
+                onClick={() => {
+                  addOrDeleteWishItem(
+                    profile.id,
+                    {
+                      contentId: String(book.itemId),
+                      contentTitle: book.title,
+                      contentAuthor: book.author,
+                      contentImg: book.cover,
+                    },
+                    wishList
+                  ).then((res) => {
+                    if (res === '추가성공') {
+                      addWishItem({
+                        contentId: String(book.itemId),
+                        contentTitle: book.title,
+                        contentAuthor: book.author,
+                        contentImg: book.cover,
+                      });
+                    } else if (res === '삭제성공') {
+                      removeWishItem(String(book.itemId));
+                    } else {
+                      Swal.fire({
+                        icon: 'error',
+                        title: '찜추가 실패',
+                        text: '다시 시도해 주세요',
+                        showConfirmButton: false,
+                        timer: 1000,
+                      });
+                    }
+                  });
+                }}>
+                ♥
+              </button>
+            )}
           </div>
           <p className="text-sm sm:text-base text-gray-700">저자 : {author}</p>
           <p className="text-sm sm:text-base text-gray-700">
