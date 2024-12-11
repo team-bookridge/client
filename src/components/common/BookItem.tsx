@@ -1,5 +1,3 @@
-/* eslint-disable no-nested-ternary */
-/* eslint-disable no-alert */
 import useAuthStore from '@/stores/authStore';
 import useModalStore from '@/stores/modalStore';
 import { addOrDeleteWishItem } from '@/supabase';
@@ -7,6 +5,7 @@ import { TResponseBookItemInfo } from '@/types';
 import escapeHTML from '@/utils/escapeHTML';
 import LinkButton from '@components/common/LinkButton';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 interface Props {
   bookInfo: TResponseBookItemInfo;
@@ -41,8 +40,12 @@ function BookItem({ bookInfo }: Props) {
                 className="hover:text-pink-500 text-gray-400 text-[2rem] min-w-[3rem] min-h-[3rem]"
                 type="button"
                 onClick={() => {
-                  alert('찜 기능은 로그인을 하셔야 합니다!');
-                  setModal('login');
+                  Swal.fire({
+                    icon: 'info',
+                    text: '해당 서비스는 로그인이 필요합니다!',
+                  }).then(() => {
+                    setModal('login');
+                  });
                 }}>
                 ♥
               </button>
@@ -77,7 +80,13 @@ function BookItem({ bookInfo }: Props) {
                     } else if (res === '삭제성공') {
                       removeWishItem(String(bookInfo.itemId));
                     } else {
-                      alert('실패하였습니다. 다시 시도해 주세요');
+                      Swal.fire({
+                        icon: 'error',
+                        title: '찜추가 실패',
+                        text: '다시 시도해 주세요',
+                        showConfirmButton: false,
+                        timer: 1000,
+                      });
                     }
                   });
                 }}>

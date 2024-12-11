@@ -3,6 +3,7 @@ import useAuthStore from '@/stores/authStore';
 import { deleteSelectedWishItems } from '@/supabase';
 import Title from '@/components/common/Title';
 import useAccessCheck from '@/hooks/useAccessCheck';
+import Swal from 'sweetalert2';
 
 function WishList() {
   const { profile, wishList, removeSelectWishItems } = useAuthStore();
@@ -30,8 +31,15 @@ function WishList() {
   };
 
   const handleDeleteSelected = () => {
-    if (!profile) {
-      alert('로그인이 필요합니다.');
+    if (!profile) return;
+
+    if (selectedBooks.length === 0) {
+      Swal.fire({
+        icon: 'warning',
+        text: '선택한 찜이 없습니다',
+        showConfirmButton: false,
+        timer: 1000,
+      });
       return;
     }
 
@@ -42,9 +50,19 @@ function WishList() {
       if (isSuccess) {
         removeSelectWishItems(selectedBooks);
         setSelectedBooks([]);
-        alert('선택한 항목이 삭제되었습니다.');
+        Swal.fire({
+          icon: 'success',
+          text: '선택한 항목이 삭제되었습니다.',
+          showConfirmButton: false,
+          timer: 1000,
+        });
       } else {
-        alert('삭제에 실패했습니다. 다시 시도해주세요.');
+        Swal.fire({
+          icon: 'warning',
+          text: '실패하였습니다. 다시 시도해주세요.',
+          showConfirmButton: false,
+          timer: 1000,
+        });
       }
     });
   };
