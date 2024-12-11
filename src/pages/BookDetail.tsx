@@ -4,13 +4,10 @@ import useGetDetailData from '@/hooks/detail/useGetDetailData';
 import LinkButton from '@/components/common/LinkButton';
 import ReviewForm from '@/components/home/ReviewForm';
 import ReviewList from '@/components/home/ReviewList';
+import { useQuery } from '@tanstack/react-query';
+import { getReviewsByContent } from '@/supabase';
 
-interface Review {
-  id: string;
-  text: string;
-}
-
-function BookDetail(): JSX.Element {
+function BookDetail() {
   const { itemId } = useParams<{ itemId: string }>();
 
   const validItemId = itemId || '';
@@ -20,25 +17,19 @@ function BookDetail(): JSX.Element {
     validItemId
   );
 
+  const { data: reviewsData, refetch } = useQuery({
+    queryKey: [`reviews-${itemId}`],
+    queryFn: () => getReviewsByContent(itemId as string),
+    // refetchInterval: 30000, // 서버 비용이 많이 붙을수 있으
+  });
+
   const [isLiked, setIsliked] = useState(false);
-  const [reviews, setReviews] = useState<Review[]>([]);
 
   const toggleLike = () => {
     setIsliked(!isLiked);
   };
 
-  const handleAddReview = (text: string) => {
-    const newReview: Review = { id: Date.now().toString(), text };
-    setReviews([...reviews, newReview]);
-  };
-
-  const handleDeleteReview = (id: string) => {
-    const updatedReview = reviews.filter((review) => review.id !== id);
-    setReviews(updatedReview);
-  };
-
   if (!itemId) {
-    console.error('Error: itemId is undefined.');
     return <div>Invalid item ID</div>;
   }
 
@@ -125,8 +116,8 @@ function BookDetail(): JSX.Element {
         <h2 className="text-base sm:text-lg font-semibold mb-4">설명</h2>
         <p className="text-sm sm:text-base text-gray-700">{description}</p>
       </div>
-      <ReviewForm onAddReview={handleAddReview} />
-      <ReviewList reviews={reviews} onDeleteReview={handleDeleteReview} />
+      <ReviewForm refetch={refetch} />
+      <ReviewList data={reviewsData} />
     </div>
   );
 }
