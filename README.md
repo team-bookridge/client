@@ -1,15 +1,16 @@
-<h2>STACK</h2>
-<h3>FrontEnd</h3>
-<div>
-  <img src="https://img.shields.io/badge/VITE-E34F26?style=for-the-badge&logo=vite&logoColor=white">
-  <img src="https://img.shields.io/badge/REACT-E34F26?style=for-the-badge&logo=react&logoColor=white">
-  <img src="https://img.shields.io/badge/TYPESCRIPT-E34F26?style=for-the-badge&logo=typescript&logoColor=white">
-  <img src="https://img.shields.io/badge/TAILWIND-E34F26?style=for-the-badge&logo=tailwind&logoColor=white">
-  <img src="https://img.shields.io/badge/ZUSTAND-E34F26?style=for-the-badge&logo=zustand&logoColor=white">
-  <img src="https://img.shields.io/badge/REACT-QUERY-E34F26?style=for-the-badge&logo=react-query&logoColor=white">
-  <img src="https://img.shields.io/badge/REACT-SLICK-E34F26?style=for-the-badge&logo=react-slick&logoColor=white">
-</div>
-<h3>backend</h3>
-<div>
-  <img src="https://img.shields.io/badge/supabase-E34F26?style=for-the-badge&logo=supabase&logoColor=white">
-</div>
+STACK
+
+FRONTEND
+
+![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-06B6D4?style=for-the-badge&logo=TailwindCSS&logoColor=white)
+
+![Zustand](https://img.shields.io/badge/Zustand-cccccc.svg?style=for-the-badge&logo=Zustand&logoColor=white)
+![ReactQuery](https://img.shields.io/badge/ReactQuery-cccccc.svg?style=for-the-badge&logoColor=white)
+![ReactSlick](https://img.shields.io/badge/ReactSlick-cccccc.svg?style=for-the-badge&logoColor=white)
+
+BACKEND
+
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
