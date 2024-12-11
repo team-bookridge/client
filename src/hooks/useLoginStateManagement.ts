@@ -1,6 +1,6 @@
 import useAuthStore from '@/stores/authStore';
 import { supabase } from '@/supabase';
-import { TProfile, TWishItem } from '@/types';
+import { TProfile, TReview, TWishItem } from '@/types';
 import { useEffect } from 'react';
 
 function useLoginStateManagement() {
@@ -11,7 +11,6 @@ function useLoginStateManagement() {
   useEffect(() => {
     const checkSession = async () => {
       const now = Date.now();
-      // 유효기간이 지났다면 세션을 다시 받음
       if (expiresAt < now) {
         const { data, error } = await supabase.auth.getSession();
 
@@ -29,41 +28,65 @@ function useLoginStateManagement() {
 
           if (additionalProfileError) return;
 
-          if (additionalProfileData) {
-            const profiles: TProfile = {
-              id: session.user.id,
-              email: session.user.user_metadata.email,
-              avatar_url: session.user.user_metadata.avatar_url,
-              ...additionalProfileData,
-            };
+          const profiles: TProfile = {
+            id: session.user.id,
+            email: session.user.user_metadata.email,
+            avatar_url: session.user.user_metadata.avatar_url,
+            nickname: additionalProfileData.nickname,
+          };
 
-            const { data: wishListData, error: wishListDataError } =
-              await supabase
-                .from('wishlist')
-                .select(
-                  'content_id, content_title, content_author, content_img'
-                )
-                .order('created_at', { ascending: false })
-                .eq('user_id', data.session.user.id);
+          const { data: wishListData, error: wishListDataError } =
+            await supabase
+              .from('wishlist')
+              .select('content_id, content_title, content_author, content_img')
+              .order('created_at', { ascending: false })
+              .eq('user_id', data.session.user.id);
 
-            if (wishListDataError && wishListDataError.code !== 'PGRST116') {
-              return;
-            }
-
-            if (wishListData) {
-              const wishlist: TWishItem[] = wishListData.map((item) => {
-                const wishItem: TWishItem = {
-                  contentId: item.content_id,
-                  contentTitle: item.content_title,
-                  contentAuthor: item.content_author,
-                  contentImg: item.content_img,
-                };
-                return wishItem;
-              });
-              setUserInfo(profiles, wishlist);
-              setExpiresAt();
-            }
+          if (wishListDataError && wishListDataError.code !== 'PGRST116') {
+            return;
           }
+
+          const wishlist: TWishItem[] | undefined = wishListData?.map(
+            (item) => {
+              const wishItem: TWishItem = {
+                contentId: item.content_id,
+                contentTitle: item.content_title,
+                contentAuthor: item.content_author,
+                contentImg: item.content_img,
+              };
+              return wishItem;
+            }
+          );
+
+          const { data: reviewListData, error: reviewListError } =
+            await supabase
+              .from('reviewlist')
+              .select('content_id, user_nickname, review, updated_at')
+              .order('updated_at', { ascending: false })
+              .eq('user_id', session.user.id);
+
+          if (reviewListError && reviewListError.code !== 'PGRST116') {
+            return;
+          }
+
+          const reviewList: TReview[] | undefined = reviewListData?.map(
+            (item) => {
+              const review: TReview = {
+                contentId: item.content_id,
+                userNickname: item.user_nickname,
+                review: item.review,
+                updatedAt: item.updated_at,
+              };
+              return review;
+            }
+          );
+
+          setUserInfo(
+            profiles,
+            wishlist as TWishItem[],
+            reviewList as TReview[]
+          );
+          setExpiresAt();
         }
       }
     };
