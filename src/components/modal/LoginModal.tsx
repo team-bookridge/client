@@ -1,4 +1,6 @@
 import { signInWithProvider } from '@/supabase';
+import kakaoLoginImg from '@/assets/kakao.png';
+import googleLoginImg from '@/assets/google.png';
 
 export default function LoginModal() {
   return (
@@ -25,7 +27,7 @@ export default function LoginModal() {
             }}
             className="w-[300px] h-[50px] rounded-lg overflow-hidden">
             <img
-              src="/src/assets/kakao.png"
+              src={kakaoLoginImg}
               alt="카카오 로그인"
               className="w-full h-full object-contain"
             />
@@ -39,7 +41,7 @@ export default function LoginModal() {
             }}
             className="w-[300px] h-[50px] rounded-lg overflow-hidden border border-grey">
             <img
-              src="/src/assets/google.png"
+              src={googleLoginImg}
               alt="구글 로그인"
               className="w-full h-full object-contain"
             />
