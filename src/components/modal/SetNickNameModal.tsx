@@ -2,6 +2,7 @@ import useAuthStore from '@/stores/authStore';
 import useModalStore from '@/stores/modalStore';
 import { setUserNickname } from '@/supabase';
 import { useState } from 'react';
+import Swal from 'sweetalert2';
 
 function SetNickNameModal() {
   const [input, setInput] = useState('');
@@ -13,14 +14,15 @@ function SetNickNameModal() {
   };
 
   const confirm = async () => {
-    if (!profile) {
-      alert('사용자 정보가 없습니다. 다시 로그인 해주세요.');
-      close();
-      return;
-    }
+    if (!profile) return;
 
     if (!input.trim()) {
-      alert('닉네임을 입력해 주세요.');
+      Swal.fire({
+        icon: 'error',
+        text: '닉네임을 입력해 주세요.',
+        showConfirmButton: false,
+        timer: 1000,
+      });
       return;
     }
 
@@ -29,9 +31,19 @@ function SetNickNameModal() {
     if (isSuccess) {
       setNickname(input.trim());
       close();
-      alert('닉네임 변경에 성공하였습니다.');
+      Swal.fire({
+        icon: 'success',
+        text: '닉네임 변경에 성공하였습니다.',
+        showConfirmButton: false,
+        timer: 1000,
+      });
     } else {
-      alert('닉네임 변경을 실패했습니다. 다시 시도해 주세요.');
+      Swal.fire({
+        icon: 'success',
+        text: '닉네임 변경을 실패했습니다. 다시 시도해 주세요.',
+        showConfirmButton: false,
+        timer: 1000,
+      });
     }
   };
 
