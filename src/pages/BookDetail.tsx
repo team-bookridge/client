@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import useGetDetailData from '@/hooks/detail/useGetDetailData';
+import useAuthStore from '@/stores/authStore';
 import LinkButton from '@/components/common/LinkButton';
 import ReviewForm from '@/components/home/ReviewForm';
 import ReviewList from '@/components/home/ReviewList';
@@ -12,7 +13,6 @@ interface Review {
 
 function BookDetail(): JSX.Element {
   const { itemId } = useParams<{ itemId: string }>();
-
   const validItemId = itemId || '';
 
   const { data, isLoading, error } = useGetDetailData(
@@ -20,11 +20,32 @@ function BookDetail(): JSX.Element {
     validItemId
   );
 
-  const [isLiked, setIsliked] = useState(false);
+  const { wishList, addWishItem, removeWishItem } = useAuthStore(); // Zustand 상태 가져오기
   const [reviews, setReviews] = useState<Review[]>([]);
 
+  // 찜 여부 확인
+  const isLiked = wishList.some((item) => item.contentId === validItemId);
+
+  // 찜 상태 토글 함수
   const toggleLike = () => {
-    setIsliked(!isLiked);
+    if (!itemId) {
+      console.error('Error: itemId is undefined.');
+      return;
+    }
+
+    const book = Array.isArray(data.item) ? data.item[0] : data.item;
+    const { title, author, cover } = book;
+
+    if (isLiked) {
+      removeWishItem(itemId); // 찜 삭제
+    } else {
+      addWishItem({
+        contentId: itemId,
+        contentTitle: title,
+        contentAuthor: author,
+        contentImg: cover,
+      }); // 찜 추가
+    }
   };
 
   const handleAddReview = (text: string) => {
